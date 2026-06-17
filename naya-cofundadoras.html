@@ -1,0 +1,913 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NAYA — Candidatura Co-Fundadora</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --naya-burgundy: #4A1B2E;
+      --naya-burgundy-light: #6D2E46;
+      --naya-forest: #1C3A2E;
+      --naya-forest-light: #2A5240;
+      --naya-cream: #F5EFE6;
+      --naya-gold: #C9A84C;
+      --naya-gold-light: #E8C97A;
+      --naya-text-on-dark: #F0E8DA;
+      --naya-muted: #B8A89A;
+      --radius-md: 8px;
+      --radius-lg: 12px;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, sans-serif;
+      background: #F4F0EB;
+      color: #1A1A1A;
+      min-height: 100vh;
+      padding: 2rem 1rem 4rem;
+      line-height: 1.6;
+    }
+
+    .page-wrapper {
+      max-width: 680px;
+      margin: 0 auto;
+    }
+
+    /* HERO */
+    .naya-hero {
+      background: var(--naya-burgundy);
+      border-radius: var(--radius-lg);
+      padding: 2.25rem 2rem 1.75rem;
+      margin-bottom: 1.25rem;
+      position: relative;
+      overflow: hidden;
+    }
+    .naya-hero::before {
+      content: '';
+      position: absolute;
+      top: -50px; right: -50px;
+      width: 220px; height: 220px;
+      border-radius: 50%;
+      background: var(--naya-burgundy-light);
+      opacity: 0.35;
+      pointer-events: none;
+    }
+    .naya-eyebrow {
+      font-size: 11px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--naya-gold);
+      margin-bottom: 0.75rem;
+      font-weight: 600;
+      position: relative;
+    }
+    .naya-hero h1 {
+      font-size: 28px;
+      font-weight: 600;
+      color: var(--naya-text-on-dark);
+      line-height: 1.2;
+      margin-bottom: 0.6rem;
+      position: relative;
+    }
+    .naya-hero p {
+      font-size: 14px;
+      color: var(--naya-muted);
+      line-height: 1.65;
+      max-width: 500px;
+      position: relative;
+    }
+
+    /* OFFER STRIP */
+    .naya-offer-strip {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 8px;
+      margin-bottom: 1.25rem;
+    }
+    @media (max-width: 520px) {
+      .naya-offer-strip { grid-template-columns: 1fr; }
+    }
+    .naya-offer-card {
+      background: #fff;
+      border: 1px solid #E0D8D0;
+      border-radius: var(--radius-md);
+      padding: 0.875rem 1rem;
+    }
+    .offer-icon {
+      font-size: 20px;
+      color: var(--naya-gold);
+      margin-bottom: 6px;
+      display: block;
+    }
+    .offer-title {
+      font-size: 12px;
+      font-weight: 600;
+      color: #1A1A1A;
+      margin-bottom: 3px;
+    }
+    .offer-desc {
+      font-size: 11px;
+      color: #666;
+      line-height: 1.5;
+    }
+
+    /* TRAIL */
+    .trail-section {
+      background: var(--naya-forest);
+      border-radius: var(--radius-lg);
+      padding: 1.25rem 1.5rem;
+      margin-bottom: 1.25rem;
+    }
+    .trail-eyebrow {
+      font-size: 11px;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--naya-gold);
+      margin-bottom: 0.75rem;
+      font-weight: 600;
+    }
+    .trail-steps {
+      display: flex;
+      align-items: center;
+      gap: 0;
+      flex-wrap: nowrap;
+      overflow-x: auto;
+      padding-bottom: 4px;
+    }
+    .trail-step {
+      text-align: center;
+      flex: 1;
+      min-width: 110px;
+    }
+    .trail-step-num {
+      width: 30px; height: 30px;
+      border-radius: 50%;
+      background: var(--naya-forest-light);
+      border: 1.5px solid var(--naya-gold);
+      color: var(--naya-gold);
+      font-size: 12px;
+      font-weight: 600;
+      display: flex; align-items: center; justify-content: center;
+      margin: 0 auto 6px;
+    }
+    .trail-step-label {
+      font-size: 11px;
+      color: var(--naya-text-on-dark);
+      font-weight: 500;
+      line-height: 1.3;
+    }
+    .trail-step-sub {
+      font-size: 10px;
+      color: var(--naya-muted);
+      margin-top: 2px;
+      font-style: italic;
+    }
+    .trail-arrow {
+      color: var(--naya-gold);
+      font-size: 18px;
+      padding: 0 2px;
+      margin-top: -14px;
+      flex-shrink: 0;
+    }
+
+    /* FORM SECTIONS */
+    .form-section {
+      background: #fff;
+      border: 1px solid #E0D8D0;
+      border-radius: var(--radius-lg);
+      padding: 1.5rem;
+      margin-bottom: 1rem;
+    }
+    .section-label {
+      font-size: 11px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: #888;
+      margin-bottom: 1.25rem;
+      font-weight: 600;
+    }
+    .field-group {
+      margin-bottom: 1.25rem;
+    }
+    .field-group:last-child { margin-bottom: 0; }
+    .field-label {
+      font-size: 14px;
+      font-weight: 600;
+      color: #1A1A1A;
+      margin-bottom: 5px;
+      display: block;
+    }
+    .field-hint {
+      font-size: 12px;
+      color: #777;
+      margin-bottom: 8px;
+      line-height: 1.5;
+    }
+    input[type="text"],
+    input[type="email"],
+    input[type="tel"],
+    select,
+    textarea {
+      width: 100%;
+      font-size: 14px;
+      font-family: inherit;
+      color: #1A1A1A;
+      background: #fff;
+      border: 1px solid #D0C8C0;
+      border-radius: var(--radius-md);
+      padding: 0 12px;
+      height: 40px;
+      outline: none;
+      transition: border-color 0.15s, box-shadow 0.15s;
+      appearance: none;
+      -webkit-appearance: none;
+    }
+    input:focus, select:focus, textarea:focus {
+      border-color: var(--naya-gold);
+      box-shadow: 0 0 0 3px rgba(201,168,76,0.15);
+    }
+    select {
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23888' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 12px center;
+      padding-right: 32px;
+    }
+    textarea {
+      height: auto;
+      padding: 10px 12px;
+      resize: vertical;
+      min-height: 88px;
+      line-height: 1.55;
+    }
+    .two-col {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+    @media (max-width: 480px) {
+      .two-col { grid-template-columns: 1fr; }
+    }
+
+    /* PROFILE CHIPS */
+    .profile-chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 4px;
+    }
+    .profile-chip {
+      padding: 6px 14px;
+      border-radius: 20px;
+      border: 1px solid #D0C8C0;
+      font-size: 12px;
+      cursor: pointer;
+      transition: all 0.15s;
+      color: #555;
+      background: #fff;
+      user-select: none;
+    }
+    .profile-chip:hover { border-color: var(--naya-gold); color: #333; }
+    .profile-chip.selected {
+      background: var(--naya-burgundy);
+      color: var(--naya-text-on-dark);
+      border-color: var(--naya-burgundy);
+      font-weight: 500;
+    }
+
+    /* ROLE CARDS */
+    .role-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+      gap: 8px;
+      margin-top: 4px;
+    }
+    .role-card {
+      border: 1.5px solid #E0D8D0;
+      border-radius: var(--radius-md);
+      padding: 0.875rem 0.75rem;
+      cursor: pointer;
+      transition: all 0.15s;
+      background: #fff;
+      display: block;
+      position: relative;
+    }
+    .role-card:hover {
+      border-color: var(--naya-gold);
+      background: #FDFAF5;
+    }
+    .role-card.selected {
+      border-color: var(--naya-gold);
+      background: rgba(201,168,76,0.07);
+    }
+    .role-card input[type="radio"] {
+      position: absolute; opacity: 0; width: 0; height: 0;
+    }
+    .role-card-title {
+      font-size: 13px;
+      font-weight: 600;
+      color: #1A1A1A;
+      margin-bottom: 2px;
+    }
+    .role-card-subtitle {
+      font-size: 11px;
+      color: #777;
+      line-height: 1.3;
+    }
+    .role-info-box {
+      display: none;
+      background: var(--naya-forest);
+      border-radius: var(--radius-md);
+      padding: 1rem 1.25rem;
+      margin-top: 10px;
+      animation: fadeIn 0.2s ease;
+    }
+    .role-info-box.visible { display: block; }
+    .role-info-title {
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--naya-gold);
+      margin-bottom: 5px;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+    }
+    .role-info-desc {
+      font-size: 13px;
+      color: var(--naya-text-on-dark);
+      line-height: 1.65;
+    }
+
+    /* INVESTMENT */
+    .investment-section {
+      border: 1.5px solid var(--naya-gold);
+      border-radius: var(--radius-lg);
+      padding: 1.5rem;
+      background: rgba(201,168,76,0.04);
+      margin-bottom: 1rem;
+    }
+    .investment-headline {
+      font-size: 12px;
+      font-weight: 600;
+      color: #555;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin-bottom: 6px;
+    }
+    .investment-value {
+      font-size: 32px;
+      font-weight: 700;
+      color: var(--naya-gold);
+      margin-bottom: 6px;
+      line-height: 1;
+    }
+    .investment-note {
+      font-size: 13px;
+      color: #555;
+      line-height: 1.6;
+      margin-bottom: 1.25rem;
+    }
+    .contrib-adjust {
+      font-size: 14px;
+      font-weight: 600;
+      color: #1A1A1A;
+      margin-bottom: 10px;
+    }
+    .contrib-options {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+    .contrib-pill {
+      padding: 8px 16px;
+      border-radius: 20px;
+      border: 1px solid #D0C8C0;
+      font-size: 12px;
+      cursor: pointer;
+      transition: all 0.15s;
+      color: #555;
+      background: #fff;
+      user-select: none;
+    }
+    .contrib-pill:hover { border-color: var(--naya-gold); }
+    .contrib-pill.selected {
+      background: var(--naya-gold);
+      color: #2C1A00;
+      border-color: var(--naya-gold);
+      font-weight: 600;
+    }
+
+    /* RADIO OPTIONS */
+    .radio-group {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      margin-top: 4px;
+    }
+    .radio-option {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      padding: 11px 14px;
+      border: 1px solid #E0D8D0;
+      border-radius: var(--radius-md);
+      cursor: pointer;
+      transition: all 0.15s;
+      background: #fff;
+    }
+    .radio-option:hover { border-color: #C0B8B0; background: #FDFAF5; }
+    .radio-option.selected { border-color: var(--naya-gold); background: rgba(201,168,76,0.06); }
+    .radio-option input[type="radio"] {
+      width: auto; height: auto;
+      margin-top: 3px;
+      accent-color: var(--naya-gold);
+      flex-shrink: 0;
+    }
+    .radio-option-label { font-size: 13px; font-weight: 600; color: #1A1A1A; }
+    .radio-option-sub { font-size: 11px; color: #777; margin-top: 2px; line-height: 1.4; }
+
+    /* CHAR COUNT */
+    .char-count {
+      font-size: 11px;
+      color: #AAA;
+      text-align: right;
+      margin-top: 4px;
+    }
+
+    /* TERMS */
+    .terms-box {
+      display: flex;
+      gap: 12px;
+      align-items: flex-start;
+      padding: 14px;
+      background: #F8F4EE;
+      border-radius: var(--radius-md);
+      border: 1px solid #E0D8D0;
+      margin-top: 8px;
+    }
+    .terms-box input[type="checkbox"] {
+      width: auto; height: auto;
+      margin-top: 2px;
+      accent-color: var(--naya-gold);
+      flex-shrink: 0;
+      cursor: pointer;
+    }
+    .terms-text {
+      font-size: 12px;
+      color: #555;
+      line-height: 1.55;
+    }
+
+    /* SUBMIT */
+    .submit-btn {
+      width: 100%;
+      background: var(--naya-burgundy);
+      color: var(--naya-text-on-dark);
+      border: none;
+      border-radius: var(--radius-md);
+      padding: 15px;
+      font-size: 15px;
+      font-weight: 600;
+      cursor: pointer;
+      font-family: inherit;
+      transition: background 0.15s, transform 0.1s;
+      margin-top: 1.5rem;
+      letter-spacing: 0.02em;
+    }
+    .submit-btn:hover { background: var(--naya-burgundy-light); }
+    .submit-btn:active { transform: scale(0.99); }
+    .submit-btn:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
+
+    .status-msg {
+      display: none;
+      padding: 14px 18px;
+      border-radius: var(--radius-md);
+      font-size: 13px;
+      margin-top: 12px;
+      text-align: center;
+      font-weight: 500;
+      line-height: 1.5;
+    }
+    .status-msg.success {
+      display: block;
+      background: #EAF3DE;
+      color: #27500A;
+      border: 1px solid #639922;
+    }
+    .status-msg.error {
+      display: block;
+      background: #FCEBEB;
+      color: #A32D2D;
+      border: 1px solid #E24B4A;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(-4px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+</head>
+<body>
+  <div class="page-wrapper">
+
+    <div class="naya-hero">
+      <p class="naya-eyebrow">O Circle — por convite</p>
+      <h1>Seja Co-Fundadora da NAYA.</h1>
+      <p>A NAYA está selecionando as 15 fundadoras que vão construir o ecossistema com a gente. Este formulário é o primeiro passo da sua candidatura.</p>
+    </div>
+
+    <div class="naya-offer-strip">
+      <div class="naya-offer-card">
+        <i class="ti ti-users offer-icon" aria-hidden="true"></i>
+        <div class="offer-title">Rede curada</div>
+        <div class="offer-desc">Acesso ao Circle + Rede de Indicação Ativa</div>
+      </div>
+      <div class="naya-offer-card">
+        <i class="ti ti-briefcase offer-icon" aria-hidden="true"></i>
+        <div class="offer-title">Intro Marketplace</div>
+        <div class="offer-desc">Posicionamento como consultora, mentora ou palestrante (2027)</div>
+      </div>
+      <div class="naya-offer-card">
+        <i class="ti ti-microphone offer-icon" aria-hidden="true"></i>
+        <div class="offer-title">Visibilidade B2B</div>
+        <div class="offer-desc">NayaCast, Fala Potência, photoshoots e acesso BSV</div>
+      </div>
+    </div>
+
+    <div class="trail-section">
+      <p class="trail-eyebrow">Trilha da co-fundadora</p>
+      <div class="trail-steps">
+        <div class="trail-step">
+          <div class="trail-step-num">1</div>
+          <div class="trail-step-label">Member Co-Founder</div>
+          <div class="trail-step-sub">entrada</div>
+        </div>
+        <div class="trail-arrow"><i class="ti ti-arrow-right" aria-hidden="true"></i></div>
+        <div class="trail-step">
+          <div class="trail-step-num">2</div>
+          <div class="trail-step-label">Co-Founder com papel</div>
+          <div class="trail-step-sub">sênior</div>
+        </div>
+        <div class="trail-arrow"><i class="ti ti-arrow-right" aria-hidden="true"></i></div>
+        <div class="trail-step">
+          <div class="trail-step-num">3</div>
+          <div class="trail-step-label">Co-Founder com participação</div>
+          <div class="trail-step-sub">sócia</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SUBSTITUA A ACTION ABAIXO PELO SEU ENDPOINT DO FORMSPREE -->
+    <form id="naya-form" action="https://formspree.io/f/xaqzzvjb" method="POST">
+
+      <!-- SEÇÃO 01 -->
+      <div class="form-section">
+        <p class="section-label">01 — Sobre você</p>
+
+        <div class="two-col">
+          <div class="field-group">
+            <label class="field-label" for="nome">Nome completo</label>
+            <input type="text" id="nome" name="nome" placeholder="Seu nome completo" required>
+          </div>
+          <div class="field-group">
+            <label class="field-label" for="email">E-mail</label>
+            <input type="email" id="email" name="email" placeholder="seu@email.com" required>
+          </div>
+        </div>
+
+        <div class="two-col">
+          <div class="field-group">
+            <label class="field-label" for="whatsapp">WhatsApp</label>
+            <input type="tel" id="whatsapp" name="whatsapp" placeholder="+55 (21) 9 0000-0000">
+          </div>
+          <div class="field-group">
+            <label class="field-label" for="cidade">Cidade / Hub</label>
+            <select id="cidade" name="cidade">
+              <option value="">Selecione...</option>
+              <option>Rio de Janeiro</option>
+              <option>Recife</option>
+              <option>São Paulo</option>
+              <option>Lisboa</option>
+              <option>Atlanta</option>
+              <option>Chicago</option>
+              <option>Nova York</option>
+              <option>Outra</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="field-group">
+          <label class="field-label" for="linkedin">LinkedIn</label>
+          <input type="text" id="linkedin" name="linkedin" placeholder="linkedin.com/in/seuperfil">
+        </div>
+
+        <div class="field-group">
+          <label class="field-label">Perfil profissional — como você se identifica?</label>
+          <p class="field-hint">Selecione todos que se aplicam.</p>
+          <div class="profile-chips">
+            <span class="profile-chip" data-val="Executiva sênior" onclick="toggleChip(this, 'perfis')">Executiva sênior</span>
+            <span class="profile-chip" data-val="Empreendedora" onclick="toggleChip(this, 'perfis')">Empreendedora</span>
+            <span class="profile-chip" data-val="Consultora" onclick="toggleChip(this, 'perfis')">Consultora</span>
+            <span class="profile-chip" data-val="Mentora" onclick="toggleChip(this, 'perfis')">Mentora</span>
+            <span class="profile-chip" data-val="Palestrante" onclick="toggleChip(this, 'perfis')">Palestrante</span>
+            <span class="profile-chip" data-val="Criadora de conteúdo" onclick="toggleChip(this, 'perfis')">Criadora de conteúdo</span>
+            <span class="profile-chip" data-val="Acadêmica / pesquisadora" onclick="toggleChip(this, 'perfis')">Acadêmica / pesquisadora</span>
+            <span class="profile-chip" data-val="Líder corporativa" onclick="toggleChip(this, 'perfis')">Líder corporativa</span>
+          </div>
+          <input type="hidden" id="perfis-hidden" name="perfis">
+        </div>
+
+        <div class="field-group">
+          <label class="field-label" for="setor">Setor de atuação</label>
+          <select id="setor" name="setor">
+            <option value="">Selecione...</option>
+            <option>Tecnologia</option>
+            <option>Finanças e investimentos</option>
+            <option>Marketing e comunicação</option>
+            <option>Saúde e bem-estar</option>
+            <option>Educação</option>
+            <option>Jurídico</option>
+            <option>Diversidade e inclusão</option>
+            <option>Inovação e startups</option>
+            <option>Cultura e entretenimento</option>
+            <option>Outro</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- SEÇÃO 02 -->
+      <div class="form-section">
+        <p class="section-label">02 — Sobre sua conexão com a NAYA</p>
+
+        <div class="field-group">
+          <label class="field-label" for="como_chegou">Como você chegou à NAYA?</label>
+          <select id="como_chegou" name="como_chegou">
+            <option value="">Selecione...</option>
+            <option>Indicação de uma membra</option>
+            <option>Redes sociais (Instagram, LinkedIn)</option>
+            <option>NayaCast</option>
+            <option>Evento ou palestra</option>
+            <option>Convite direto da Carol</option>
+            <option>Outro</option>
+          </select>
+        </div>
+
+        <div class="field-group">
+          <label class="field-label" for="motivacao">O que te move a ser co-fundadora da NAYA?</label>
+          <p class="field-hint">Não precisa ser perfeito — queremos entender o que te trouxe até aqui.</p>
+          <textarea id="motivacao" name="motivacao" maxlength="500" oninput="countChars(this, 'mot-count')"></textarea>
+          <div class="char-count"><span id="mot-count">0</span> / 500</div>
+        </div>
+
+        <div class="field-group">
+          <label class="field-label" for="rede">Que rede ou ecossistema você carrega com você?</label>
+          <p class="field-hint">Descreva brevemente suas conexões relevantes — corporativas, regionais, internacionais, setoriais.</p>
+          <textarea id="rede" name="rede" maxlength="400" oninput="countChars(this, 'rede-count')"></textarea>
+          <div class="char-count"><span id="rede-count">0</span> / 400</div>
+        </div>
+      </div>
+
+      <!-- SEÇÃO 03 -->
+      <div class="form-section">
+        <p class="section-label">03 — Sua contribuição ao ecossistema</p>
+
+        <div class="field-group">
+          <label class="field-label">Qual função você quer ocupar?</label>
+          <p class="field-hint">Clique em uma função para ver a descrição completa do papel.</p>
+          <div class="role-grid">
+            <label class="role-card" onclick="selectRole(this, 'CMO')">
+              <input type="radio" name="funcao" value="CMO">
+              <div class="role-card-title">CMO</div>
+              <div class="role-card-subtitle">Chief Marketing Officer</div>
+            </label>
+            <label class="role-card" onclick="selectRole(this, 'COO')">
+              <input type="radio" name="funcao" value="COO">
+              <div class="role-card-title">COO</div>
+              <div class="role-card-subtitle">Chief Operations Officer</div>
+            </label>
+            <label class="role-card" onclick="selectRole(this, 'Head de Parcerias B2B')">
+              <input type="radio" name="funcao" value="Head de Parcerias B2B">
+              <div class="role-card-title">Head B2B</div>
+              <div class="role-card-subtitle">Parcerias & Patrocínios</div>
+            </label>
+            <label class="role-card" onclick="selectRole(this, 'Head de Comunidade')">
+              <input type="radio" name="funcao" value="Head de Comunidade">
+              <div class="role-card-title">Head Comunidade</div>
+              <div class="role-card-subtitle">Ecossistema & Retenção</div>
+            </label>
+            <label class="role-card" onclick="selectRole(this, 'Champion de Hub')">
+              <input type="radio" name="funcao" value="Champion de Hub">
+              <div class="role-card-title">Champion de Hub</div>
+              <div class="role-card-subtitle">Representação regional</div>
+            </label>
+          </div>
+
+          <div class="role-info-box" id="role-info">
+            <div class="role-info-title" id="role-info-title"></div>
+            <div class="role-info-desc" id="role-info-desc"></div>
+          </div>
+        </div>
+
+        <div class="field-group">
+          <label class="field-label" for="contribuicao_extra">Além da função, como mais você pode contribuir?</label>
+          <p class="field-hint">Expertise técnica, acesso a empresas, produção de conteúdo, facilitação de eventos...</p>
+          <textarea id="contribuicao_extra" name="contribuicao_extra" maxlength="400" oninput="countChars(this, 'contrib-count')"></textarea>
+          <div class="char-count"><span id="contrib-count">0</span> / 400</div>
+        </div>
+
+        <div class="field-group">
+          <label class="field-label">Disponibilidade de tempo</label>
+          <div class="radio-group">
+            <label class="radio-option" onclick="selectRadio(this)">
+              <input type="radio" name="disponibilidade" value="Até 4h/semana">
+              <div>
+                <div class="radio-option-label">Até 4h por semana</div>
+                <div class="radio-option-sub">Participação estratégica e presença em eventos-chave</div>
+              </div>
+            </label>
+            <label class="radio-option" onclick="selectRadio(this)">
+              <input type="radio" name="disponibilidade" value="4-8h/semana">
+              <div>
+                <div class="radio-option-label">4 a 8h por semana</div>
+                <div class="radio-option-sub">Envolvimento ativo em projeto ou função definida</div>
+              </div>
+            </label>
+            <label class="radio-option" onclick="selectRadio(this)">
+              <input type="radio" name="disponibilidade" value="+8h/semana">
+              <div>
+                <div class="radio-option-label">Mais de 8h por semana</div>
+                <div class="radio-option-sub">Dedicação plena a uma das funções de liderança</div>
+              </div>
+            </label>
+          </div>
+        </div>
+      </div>
+
+      <!-- INVESTIMENTO -->
+      <div class="investment-section">
+        <p class="investment-headline">Investimento de entrada na NAYA</p>
+        <p class="investment-value">R$ 3.500</p>
+        <p class="investment-note">Este é o valor-base de entrada para co-fundadoras do Circle. O valor está diretamente alinhado ao que cada membra pode contribuir para as operações da NAYA — quanto mais estrutural a sua contribuição, mais esse investimento pode ser conversado com a Carol. O que entra em troca: acesso ao Circle curado, Rede de Indicação Ativa, visibilidade no NayaCast, Fala Potência e photoshoots, e acesso ao Intro Marketplace em 2027.</p>
+        <p class="contrib-adjust">Você tem condições de fazer esse investimento?</p>
+        <div class="contrib-options">
+          <span class="contrib-pill" onclick="togglePill(this)">Sim, consigo os R$ 3.500</span>
+          <span class="contrib-pill" onclick="togglePill(this)">Sim, mas preciso parcelar</span>
+          <span class="contrib-pill" onclick="togglePill(this)">Quero conversar sobre redução por contribuição</span>
+          <span class="contrib-pill" onclick="togglePill(this)">Preciso de mais informações</span>
+        </div>
+        <input type="hidden" id="investimento-hidden" name="investimento">
+      </div>
+
+      <!-- SEÇÃO 04 -->
+      <div class="form-section">
+        <p class="section-label">04 — Para finalizarmos</p>
+
+        <div class="field-group">
+          <label class="field-label" for="expectativas">O que você espera da NAYA nos próximos 12 meses?</label>
+          <textarea id="expectativas" name="expectativas" maxlength="400" oninput="countChars(this, 'exp-count')"></textarea>
+          <div class="char-count"><span id="exp-count">0</span> / 400</div>
+        </div>
+
+        <div class="field-group">
+          <label class="field-label">Você já conhece alguma membra ou co-fundadora da NAYA?</label>
+          <div class="radio-group">
+            <label class="radio-option" onclick="selectRadio(this); toggleConheceMembra(this)">
+              <input type="radio" name="conhece_membra" value="Sim">
+              <div><div class="radio-option-label">Sim</div></div>
+            </label>
+            <label class="radio-option" onclick="selectRadio(this); toggleConheceMembra(this)">
+              <input type="radio" name="conhece_membra" value="Não">
+              <div><div class="radio-option-label">Não ainda</div></div>
+            </label>
+          </div>
+        </div>
+
+        <div class="field-group" id="quem-field" style="display:none;">
+          <label class="field-label" for="quem_conhece">Quem você conhece?</label>
+          <input type="text" id="quem_conhece" name="quem_conhece" placeholder="Nome da membra">
+        </div>
+
+        <div class="field-group">
+          <label class="field-label" for="algo_mais">Tem mais alguma coisa que quer compartilhar?</label>
+          <textarea id="algo_mais" name="algo_mais" maxlength="400" placeholder="Fique à vontade..." oninput="countChars(this, 'mais-count')"></textarea>
+          <div class="char-count"><span id="mais-count">0</span> / 400</div>
+        </div>
+
+        <div class="terms-box">
+          <input type="checkbox" id="aceite" name="aceite" required>
+          <p class="terms-text">Confirmo que as informações prestadas são verdadeiras e que entendo que a NAYA é um ecossistema de construção coletiva — minha candidatura será avaliada antes da confirmação da vaga.</p>
+        </div>
+      </div>
+
+      <button type="submit" class="submit-btn" id="submit-btn">Enviar minha candidatura →</button>
+      <div class="status-msg" id="status-msg"></div>
+
+    </form>
+  </div>
+
+  <script>
+    const roleData = {
+      'CMO': {
+        title: 'CMO — Chief Marketing Officer',
+        desc: 'Liderança de conteúdo, calendário editorial, briefings de vídeo e social. Conhecimento de marca e comunicação como pré-requisito. Você define a voz da NAYA e garante presença consistente no mercado.'
+      },
+      'COO': {
+        title: 'COO — Chief Operations Officer',
+        desc: 'Gestão do dia a dia operacional — agenda, fluxos, Airtable, atendimento a membras. Libera Carol para estratégia e relacionamento. Você é o motor que faz a NAYA funcionar.'
+      },
+      'Head de Parcerias B2B': {
+        title: 'Head de Parcerias B2B',
+        desc: 'Pipeline de patrocínios, speakers e ativações. Perfil com acesso a decisores corporativos. Você abre portas para empresas e conecta o ecossistema NAYA ao mundo corporativo.'
+      },
+      'Head de Comunidade': {
+        title: 'Head de Comunidade',
+        desc: 'Saúde do ecossistema — engajamento de membras, moderação Circle, NPS, indicadores de retenção. Você mantém a rede viva, quente e referenciando umas às outras.'
+      },
+      'Champion de Hub': {
+        title: 'Champion de Hub — Representação Regional',
+        desc: 'Representação estratégica da NAYA em ecossistemas locais. Cada champion ativa rede, capta leads e representa a NAYA em eventos do seu hub. Rio, Recife, Lisboa, Atlanta, Chicago, NY.'
+      }
+    };
+
+    const chipSelections = {};
+
+    function selectRole(card, roleName) {
+      document.querySelectorAll('.role-card').forEach(c => c.classList.remove('selected'));
+      card.classList.add('selected');
+      card.querySelector('input[type="radio"]').checked = true;
+      const info = document.getElementById('role-info');
+      const data = roleData[roleName];
+      document.getElementById('role-info-title').textContent = data.title;
+      document.getElementById('role-info-desc').textContent = data.desc;
+      info.classList.add('visible');
+    }
+
+    function toggleChip(chip, group) {
+      chip.classList.toggle('selected');
+      if (!chipSelections[group]) chipSelections[group] = [];
+      const val = chip.dataset.val;
+      if (chip.classList.contains('selected')) {
+        if (!chipSelections[group].includes(val)) chipSelections[group].push(val);
+      } else {
+        chipSelections[group] = chipSelections[group].filter(v => v !== val);
+      }
+      const hidden = document.getElementById(group + '-hidden');
+      if (hidden) hidden.value = chipSelections[group].join(', ');
+    }
+
+    function togglePill(pill) {
+      document.querySelectorAll('.contrib-pill').forEach(p => p.classList.remove('selected'));
+      pill.classList.add('selected');
+      document.getElementById('investimento-hidden').value = pill.textContent.trim();
+    }
+
+    function selectRadio(option) {
+      const name = option.querySelector('input[type="radio"]').name;
+      document.querySelectorAll('input[name="' + name + '"]').forEach(r => {
+        r.closest('.radio-option').classList.remove('selected');
+      });
+      option.classList.add('selected');
+      option.querySelector('input[type="radio"]').checked = true;
+    }
+
+    function toggleConheceMembra(option) {
+      const val = option.querySelector('input[type="radio"]').value;
+      document.getElementById('quem-field').style.display = val === 'Sim' ? 'block' : 'none';
+    }
+
+    function countChars(el, countId) {
+      document.getElementById(countId).textContent = el.value.length;
+    }
+
+    document.getElementById('naya-form').addEventListener('submit', async function(e) {
+      e.preventDefault();
+      const btn = document.getElementById('submit-btn');
+      const status = document.getElementById('status-msg');
+      btn.disabled = true;
+      btn.textContent = 'Enviando...';
+      status.className = 'status-msg';
+      try {
+        const res = await fetch(this.action, {
+          method: 'POST',
+          body: new FormData(this),
+          headers: { 'Accept': 'application/json' }
+        });
+        if (res.ok) {
+          status.className = 'status-msg success';
+          status.textContent = '✓ Candidatura enviada com sucesso! Carol vai entrar em contato em breve.';
+          btn.textContent = 'Enviado ✓';
+          btn.style.background = '#27500A';
+        } else {
+          throw new Error('Erro ao enviar');
+        }
+      } catch (err) {
+        status.className = 'status-msg error';
+        status.textContent = 'Houve um erro ao enviar. Tente novamente ou entre em contato diretamente.';
+        btn.disabled = false;
+        btn.textContent = 'Enviar minha candidatura →';
+      }
+    });
+  </script>
+</body>
+</html>
