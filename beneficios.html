@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NAYA Circle — Benefícios da Cohort Fundadora</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --vinho:  #3c0f15;
+      --vinho2: #5a1e28;
+      --creme:  #e7e0cd;
+      --verde:  #373f27;
+      --sage:   #80856e;
+      --rose:   #a36873;
+      --lila:   #e7b3ce;
+      --cream:  #f9f5ef;
+      --fd: 'Cormorant Garamond', Georgia, serif;
+      --fb: 'DM Sans', system-ui, sans-serif;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: var(--fb); background: var(--cream); color: var(--vinho); line-height: 1.6; }
+
+    /* ── HEADER ── */
+    .header {
+      background: var(--vinho);
+      padding: 2.5rem 1.5rem 2rem;
+      text-align: center;
+    }
+    .header-logo {
+      font-family: var(--fd); font-size: 48px; font-weight: 300;
+      letter-spacing: .28em; color: var(--creme); margin-bottom: 1rem;
+    }
+    .header-eyebrow {
+      font-size: 10px; letter-spacing: .2em; text-transform: uppercase;
+      color: var(--rose); font-weight: 500; margin-bottom: .75rem;
+    }
+    .header-title {
+      font-family: var(--fd); font-size: clamp(22px, 5vw, 34px);
+      font-weight: 400; color: var(--creme); line-height: 1.2; margin-bottom: .5rem;
+    }
+    .header-sub {
+      font-size: 13px; color: rgba(231,224,205,.6); line-height: 1.6;
+    }
+    .header-pills {
+      display: flex; flex-wrap: wrap; justify-content: center;
+      gap: 8px; margin-top: 1.25rem;
+    }
+    .header-pill {
+      padding: 6px 14px; border-radius: 20px;
+      border: 1px solid rgba(231,224,205,.25);
+      font-size: 11px; color: rgba(231,224,205,.75);
+    }
+
+    /* ── LAYOUT ── */
+    .page { max-width: 680px; margin: 0 auto; padding: 2.5rem 1.25rem 5rem; }
+
+    /* ── SECTION HEADERS ── */
+    .section-ey {
+      font-size: 9px; letter-spacing: .18em; text-transform: uppercase;
+      color: var(--rose); font-weight: 600; margin-bottom: .3rem;
+    }
+    .section-title {
+      font-family: var(--fd); font-size: 26px; font-weight: 400;
+      color: var(--vinho); margin-bottom: .3rem; line-height: 1.2;
+    }
+    .section-sub {
+      font-size: 13px; color: var(--sage); margin-bottom: 1.25rem; line-height: 1.5;
+    }
+    .section-divider {
+      border: none; border-top: 1px solid rgba(60,15,21,.1); margin: 2rem 0;
+    }
+
+    /* ── EXCLUSIVE BADGE ── */
+    .badge-exclusive {
+      background: var(--vinho); border-radius: 10px;
+      padding: 1.25rem 1.5rem; margin-bottom: 1rem;
+    }
+    .badge-tag {
+      font-size: 9px; letter-spacing: .16em; text-transform: uppercase;
+      color: var(--rose); font-weight: 600; margin-bottom: 4px;
+    }
+    .badge-title {
+      font-family: var(--fd); font-size: 18px; font-weight: 500;
+      color: var(--creme); margin-bottom: 6px;
+    }
+    .badge-desc { font-size: 13px; color: rgba(231,224,205,.7); line-height: 1.65; }
+
+    /* ── BENEFIT CARDS ── */
+    .ben-card {
+      background: #fff; border: 1px solid rgba(60,15,21,.1);
+      border-radius: 10px; padding: 1.25rem 1.5rem; margin-bottom: .875rem;
+    }
+    .ben-card-title {
+      font-size: 14px; font-weight: 500; color: var(--vinho); margin-bottom: 5px;
+    }
+    .ben-card-desc { font-size: 13px; color: #555; line-height: 1.65; }
+
+    /* ── NAYA INDICA TABLE ── */
+    .indica-grid { display: flex; flex-direction: column; gap: 8px; margin-bottom: .875rem; }
+    .indica-row {
+      display: grid; grid-template-columns: 160px 1fr; gap: 12px;
+      background: #fff; border: 1px solid rgba(60,15,21,.1);
+      border-radius: 8px; padding: 1rem 1.25rem; align-items: start;
+    }
+    @media (max-width: 480px) { .indica-row { grid-template-columns: 1fr; } }
+    .indica-label { font-size: 13px; font-weight: 500; color: var(--vinho); }
+    .indica-desc { font-size: 13px; color: #555; line-height: 1.55; }
+    .indica-note {
+      font-size: 11px; font-style: italic; color: var(--rose);
+      margin-top: .5rem; line-height: 1.5;
+    }
+
+    /* ── EXTRA BENEFITS (Builder/Champion) ── */
+    .extra-section {
+      background: var(--verde); border-radius: 12px;
+      padding: 1.5rem; margin-top: 2rem;
+    }
+    .extra-ey {
+      font-size: 9px; letter-spacing: .18em; text-transform: uppercase;
+      color: rgba(231,224,205,.5); font-weight: 600; margin-bottom: .3rem;
+    }
+    .extra-title {
+      font-family: var(--fd); font-size: 22px; font-weight: 400;
+      color: var(--creme); margin-bottom: .4rem;
+    }
+    .extra-sub { font-size: 13px; color: rgba(231,224,205,.6); margin-bottom: 1.25rem; line-height: 1.5; }
+    .extra-card {
+      background: rgba(231,224,205,.07); border: 1px solid rgba(231,224,205,.15);
+      border-radius: 8px; padding: 1rem 1.25rem; margin-bottom: .75rem;
+    }
+    .extra-card-title { font-size: 14px; font-weight: 500; color: var(--creme); margin-bottom: 5px; }
+    .extra-card-desc { font-size: 13px; color: rgba(231,224,205,.7); line-height: 1.65; }
+
+    /* ── INVESTMENT SUMMARY ── */
+    .invest-grid {
+      display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px;
+      margin: 1.25rem 0;
+    }
+    @media (max-width: 400px) { .invest-grid { grid-template-columns: 1fr; } }
+    .invest-cell {
+      background: #fff; border: 1px solid rgba(60,15,21,.1);
+      border-radius: 8px; padding: 1rem;
+    }
+    .invest-cell-tag {
+      font-size: 9px; letter-spacing: .14em; text-transform: uppercase;
+      color: var(--sage); font-weight: 600; margin-bottom: 4px;
+    }
+    .invest-cell-val {
+      font-family: var(--fd); font-size: 28px; font-weight: 500;
+      color: var(--vinho); line-height: 1; margin-bottom: 4px;
+    }
+    .invest-cell-desc { font-size: 11px; color: var(--sage); line-height: 1.4; }
+    .invest-note {
+      font-size: 12px; color: var(--sage); line-height: 1.65;
+      margin-top: .75rem; padding-top: .75rem;
+      border-top: 1px solid rgba(60,15,21,.08);
+    }
+    .invest-legal {
+      font-size: 11px; color: rgba(60,15,21,.45); line-height: 1.6;
+      margin-top: .75rem; font-style: italic;
+    }
+
+    /* ── CTA FOOTER ── */
+    .footer {
+      text-align: center; margin-top: 2.5rem; padding-top: 2rem;
+      border-top: 1px solid rgba(60,15,21,.1);
+    }
+    .footer-slogan {
+      font-family: var(--fd); font-size: 22px; font-style: italic;
+      color: var(--vinho); margin-bottom: .5rem;
+    }
+    .footer-contact { font-size: 13px; color: var(--sage); }
+    .footer-contact a { color: var(--rose); text-decoration: none; }
+    .footer-contact a:hover { text-decoration: underline; }
+    .back-btn {
+      display: inline-block; margin-top: 1.5rem;
+      background: var(--vinho); color: var(--creme);
+      font-family: var(--fb); font-size: 11px; letter-spacing: .16em;
+      text-transform: uppercase; padding: 12px 28px;
+      border-radius: 4px; text-decoration: none; transition: background .15s;
+    }
+    .back-btn:hover { background: var(--vinho2); }
+  </style>
+</head>
+<body>
+
+<div class="header">
+  <div class="header-logo">NAYA</div>
+  <p class="header-eyebrow">NAYA Circle · Cohort Fundadora</p>
+  <h1 class="header-title">Resumo de Benefícios</h1>
+  <p class="header-sub"><em>O que você ganha ao ser Founder Member.</em></p>
+  <div class="header-pills">
+    <span class="header-pill">15 vagas</span>
+    <span class="header-pill">Investimento inaugural R$ 2.500</span>
+    <span class="header-pill">Kick-off julho 2026</span>
+  </div>
+</div>
+
+<div class="page">
+
+  <!-- ══ EXCLUSIVOS DA COHORT FUNDADORA ══ -->
+  <p class="section-ey">Apenas para as 15 mulheres desta cohort</p>
+  <h2 class="section-title">Exclusivos da Cohort Fundadora</h2>
+  <p class="section-sub">Estes três benefícios não serão replicados em ciclos futuros. Nenhuma membra que entrar depois os terá.</p>
+
+  <div class="badge-exclusive">
+    <p class="badge-tag">ÚNICO</p>
+    <p class="badge-title">Selo Founder Member</p>
+    <p class="badge-desc">Seu nome entra para a história da NAYA como integrante da cohort que construiu a infraestrutura antes de ela existir. Capital reputacional vitalício — LinkedIn, currículo, rede. Referenciado em todos os materiais institucionais e no Naya Conecta (FIAP, agosto 2026).</p>
+  </div>
+
+  <div class="badge-exclusive">
+    <p class="badge-tag">CONDIÇÃO ESPECIAL DE RENOVAÇÃO</p>
+    <p class="badge-title">Renovação com proteção de valor</p>
+    <p class="badge-desc">A taxa padrão do Circle será R$ 7.000/ano. Como Founder Member, você renova pelos dois primeiros ciclos pagando 50% — R$ 3.500 cada. Economia total nos dois ciclos de proteção: R$ 7.000 — quase três vezes o investimento inaugural.</p>
+  </div>
+
+  <div class="badge-exclusive">
+    <p class="badge-tag">TEMPORADA INAUGURAL GARANTIDA</p>
+    <p class="badge-title">Temporada Fundadora do Fala Potência</p>
+    <p class="badge-desc">Sua participação na primeira temporada do Fala Potência é garantida por ser Founder Member. As temporadas futuras existirão, mas com critério de seleção. O conteúdo é editado profissionalmente e entregue para uso imediato em LinkedIn, portfólio, apresentações e mídia.</p>
+  </div>
+
+  <hr class="section-divider">
+
+  <!-- ══ BENEFÍCIOS DE POSICIONAMENTO ══ -->
+  <p class="section-ey">Para toda a Cohort Fundadora</p>
+  <h2 class="section-title">Benefícios de posicionamento</h2>
+  <p class="section-sub"> </p>
+
+  <div class="ben-card">
+    <p class="ben-card-title">Fala Potência</p>
+    <p class="ben-card-desc">Episódio individual em vídeo, gravado e editado profissionalmente. Posiciona você como referência na sua área. Aplicações diretas: LinkedIn e redes profissionais, portfólio de consultoria ou palestra, press kit e apresentações institucionais.</p>
+  </div>
+
+  <div class="ben-card">
+    <p class="ben-card-title">Photoshoot editorial</p>
+    <p class="ben-card-desc">Sessão de ensaio fotográfico profissional realizada no mesmo dia e set do Fala Potência. O pacote inclui 5 a 8 fotos tratadas por participante, prontas para uso em LinkedIn, Instagram, press kit e apresentações.</p>
+  </div>
+
+  <p class="section-ey" style="margin-top:1.5rem">NAYA Indica — três frentes de visibilidade ativa</p>
+  <div class="indica-grid">
+    <div class="indica-row">
+      <div class="indica-label">Banco de Talentos</div>
+      <div class="indica-desc">Seu perfil curado disponível para oportunidades de carreira, projetos estratégicos e posições executivas via rede de parceiros da NAYA.</div>
+    </div>
+    <div class="indica-row">
+      <div class="indica-label">Book de Experts</div>
+      <div class="indica-desc">Seleção ativa para apresentação a clientes B2B, sponsors e parceiros institucionais com demandas específicas de expertise.</div>
+    </div>
+    <div class="indica-row">
+      <div class="indica-label">Speakers e Ativações</div>
+      <div class="indica-desc">Indicação para palestras, painéis e ativações comerciais. Sua presença integra os contratos de patrocínio da NAYA — presença com endosso e curadoria da marca.</div>
+    </div>
+  </div>
+  <p class="indica-note">Builder e Champion têm prioridade nas frentes de Book de Experts, Speakers e Ativações.</p>
+
+  <hr class="section-divider">
+
+  <!-- ══ BENEFÍCIO DE RECEITA ══ -->
+  <p class="section-ey">Para toda a Cohort Fundadora</p>
+  <h2 class="section-title">Benefício de receita</h2>
+
+  <div class="ben-card">
+    <p class="ben-card-title">NAYA Intro</p>
+    <p class="ben-card-desc">Você entra na fase inaugural da rede que transforma o que você já sabe em receita. A NAYA identifica quem precisa do seu conhecimento, faz a conexão e sustenta a infraestrutura. Você entrega a experiência — sessão individual, coletiva, consultoria ou mentoria — e fica com a maior parte da receita gerada. Builder e Champion têm ativação prioritária.</p>
+  </div>
+
+  <hr class="section-divider">
+
+  <!-- ══ BENEFÍCIO DE ACESSO ══ -->
+  <p class="section-ey">Para toda a Cohort Fundadora</p>
+  <h2 class="section-title">Benefício de acesso</h2>
+
+  <div class="ben-card">
+    <p class="ben-card-title">Build The Room</p>
+    <p class="ben-card-desc">Experiências curadas de alto valor relacional para aproximar Founder Members de lideranças, investidores e tomadores de decisão. O número de participantes é pequeno por princípio — conexões reais, não trocas de cartão. Founder Members têm prioridade nas primeiras edições, antes de o formato abrir para outras membras.</p>
+  </div>
+
+  <!-- ══ BENEFÍCIOS BUILDER + CHAMPION ══ -->
+  <div class="extra-section">
+    <p class="extra-ey">Além do pacote base</p>
+    <h2 class="extra-title">Benefícios adicionais exclusivos</h2>
+    <p class="extra-sub">Quem assume a trilha Builder ou Champion acessa estes três benefícios além de tudo que o pacote base inclui.</p>
+
+    <div class="extra-card">
+      <p class="extra-card-title">Sessões de carreira com especialistas</p>
+      <p class="extra-card-desc">Sessões individuais ou em pequeno grupo com mentoras, headhunters e coaches para posicionamento de liderança, transição de carreira, preparo para MBA ou vagas executivas e estratégia de monetização de expertise.</p>
+    </div>
+
+    <div class="extra-card">
+      <p class="extra-card-title">Ativação prioritária no NAYA Intro</p>
+      <p class="extra-card-desc">Primeiras a ser posicionadas como expert na rede NAYA Intro para projetos B2B — com apoio direto na construção do perfil, formato de sessão e precificação, antes de qualquer membra sem trilha ativa.</p>
+    </div>
+
+    <div class="extra-card" style="margin-bottom:0">
+      <p class="extra-card-title">Prioridade no NAYA Indica</p>
+      <p class="extra-card-desc">Entrada prioritária na curadoria ativa para Book de Experts, oportunidades de speaker e ativações comerciais com sponsors. Conselheiras integram o Banco de Talentos e são consideradas para seleções conforme perfil e demanda.</p>
+    </div>
+  </div>
+
+  <hr class="section-divider">
+
+  <!-- ══ INVESTIMENTO ══ -->
+  <p class="section-ey">Investimento e proteção de valor</p>
+  <h2 class="section-title">O que você investe — e o que você garante</h2>
+
+  <div class="invest-grid">
+    <div class="invest-cell">
+      <p class="invest-cell-tag">Entrada 2025</p>
+      <p class="invest-cell-val">R$ 2.500</p>
+      <p class="invest-cell-desc">Único para todas as trilhas</p>
+    </div>
+    <div class="invest-cell">
+      <p class="invest-cell-tag">Renovações 1 e 2</p>
+      <p class="invest-cell-val">R$ 3.500</p>
+      <p class="invest-cell-desc">50% da taxa de mercado (R$ 7.000)</p>
+    </div>
+    <div class="invest-cell">
+      <p class="invest-cell-tag">Sua economia (2 ciclos)</p>
+      <p class="invest-cell-val">R$ 7.000</p>
+      <p class="invest-cell-desc">Quase 3× o investimento inaugural</p>
+    </div>
+    <div class="invest-cell">
+      <p class="invest-cell-tag">Vagas disponíveis</p>
+      <p class="invest-cell-val">15</p>
+      <p class="invest-cell-desc">Sem extensão · sem novas entradas</p>
+    </div>
+  </div>
+
+  <p class="invest-note">Parcelamento disponível e condições definidas na conversa individual com a Carol. Prazo de pagamento: até 5 de julho de 2025.</p>
+  <p class="invest-legal">O investimento inaugural não confere participação societária, vínculo empregatício ou participação nos resultados da empresa.</p>
+
+  <!-- ══ FOOTER ══ -->
+  <div class="footer">
+    <p class="footer-slogan">Seguimos juntas em movimento.</p>
+    <p class="footer-contact">Dúvidas e contato: <a href="mailto:hello@nayahub.com.br">hello@nayahub.com.br</a></p>
+    <a class="back-btn" href="naya-cofundadoras.html">← Voltar ao formulário</a>
+  </div>
+
+</div>
+</body>
+</html>
