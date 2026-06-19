@@ -256,6 +256,15 @@
     .end-h { font-family: var(--fd); font-size: 30px; font-weight: 400; color: var(--creme); line-height: 1.25; margin-bottom: 1rem; }
     .end-p { font-size: 14px; color: rgba(231,224,205,.65); line-height: 1.75; }
 
+
+    /* ── BENEFIT BLOCKS ── */
+    .ben-block { margin-top: 12px; padding: 12px 14px; background: rgba(60,15,21,.04); border-radius: 8px; }
+    .ben-title { font-size: 10px; letter-spacing: .12em; text-transform: uppercase; color: var(--rose); font-weight: 600; margin-bottom: 8px; }
+    .ben-item { font-size: 12px; color: #444; line-height: 1.55; margin-bottom: 7px; padding-left: 10px; position: relative; }
+    .ben-item::before { content: '·'; position: absolute; left: 0; color: var(--rose); }
+    .ben-extra { background: rgba(163,104,115,.06); border-radius: 5px; padding: 6px 10px 6px 20px; }
+    .ben-link { display: inline-block; margin-top: 10px; font-size: 11px; color: var(--rose); text-decoration: none; border-bottom: 1px solid rgba(163,104,115,.3); padding-bottom: 1px; }
+    .ben-link:hover { border-color: var(--rose); }
     @keyframes fdn { from { opacity:0; transform:translateY(-5px); } to { opacity:1; transform:translateY(0); } }
   </style>
 </head>
@@ -331,7 +340,7 @@
   </div>
   <div class="f">
     <label class="fl">Setor principal de atuação *</label>
-    <select name="setor_atuacao" required>
+    <select name="setor_atuacao" required onchange="showSetor(this)">
       <option value="">Selecione...</option>
       <option>Tecnologia e produto</option><option>Finanças e investimentos</option>
       <option>Marketing e comunicação</option><option>Saúde e bem-estar</option>
@@ -340,6 +349,9 @@
       <option>Cultura e entretenimento</option><option>ESG e impacto social</option>
       <option>Varejo e consumo</option><option>Recursos Humanos</option><option>Outro</option>
     </select>
+  </div>
+  <div class="cond" id="cond-setor-outro">
+    <div class="f"><label class="fl">Qual setor?</label><input type="text" name="setor_outro" placeholder="Descreva seu setor de atuação"></div>
   </div>
 
   <hr class="div">
@@ -394,7 +406,7 @@
     </select>
   </div>
   <div class="f">
-    <label class="fl">O que você já construiu — e chegou a algum lugar? *</label>
+    <label class="fl">O que você já construiu e movimentou em sua vida/carreira? *</label>
     <p class="fh">Pode ser uma empresa, um programa, uma comunidade, um produto, uma rede. Algo concreto que você iniciou ou liderou.</p>
     <textarea name="historico_construcao" maxlength="600" placeholder="Ex: Criei o programa de mentoria X que formou Y líderes. Fundei a startup Z que chegou a X usuários. Lancei a comunidade W que hoje tem..." oninput="cc(this,'c-hc')" required></textarea>
     <div class="cc"><span id="c-hc">0</span> / 600</div>
@@ -434,8 +446,8 @@
     <div class="f"><label class="fl">Quem te indicou?</label><input type="text" name="indicada_por" placeholder="Nome da pessoa que te trouxe"></div>
   </div>
   <div class="f">
-    <label class="fl">O que te move a ser Founder Member da NAYA? *</label>
-    <p class="fh">Não precisa ser perfeito. Queremos entender o que te trouxe até aqui — não o que você acha que queremos ouvir.</p>
+    <label class="fl">O que te motiva a ser Founder Member da NAYA? *</label>
+    <p class="fh">Queremos entender o que te trouxe até aqui.</p>
     <textarea name="motivacao" maxlength="800" oninput="cc(this,'c-mo')" required></textarea>
     <div class="cc"><span id="c-mo">0</span> / 800</div>
   </div>
@@ -461,11 +473,18 @@
     <label class="fl">O que te move a ser co-fundadora da NAYA?</label>
     <p class="fh">Selecione todos que se aplicam.</p>
     <div class="chips">
-      <span class="chip" onclick="chip(this,'motiv')">Visibilidade</span>
+      <span class="chip" onclick="chip(this,'motiv')">Visibilidade e posicionamento</span>
       <span class="chip" onclick="chip(this,'motiv')">Expandir meu negócio</span>
       <span class="chip" onclick="chip(this,'motiv')">Diversificação de renda / receita</span>
       <span class="chip" onclick="chip(this,'motiv')">Aprendizado e impacto</span>
       <span class="chip" onclick="chip(this,'motiv')">Rede curada</span>
+      <span class="chip" onclick="chip(this,'motiv')">Conexão com experiências internacionais</span>
+      <span class="chip" onclick="chip(this,'motiv')">Conexão com vagas</span>
+      <span class="chip" onclick="chip(this,'motiv')">Preparação para MBA</span>
+      <span class="chip" onclick="chip(this,'motiv')">Grupo de estudos</span>
+      <span class="chip" onclick="chip(this,'motiv')">Acesso a cursos executivos</span>
+      <span class="chip" onclick="chip(this,'motiv')">Acesso à rede de empresárias</span>
+      <span class="chip" onclick="chip(this,'motiv')">Acesso a investidores</span>
     </div>
     <input type="hidden" id="h-motiv" name="motivacoes_cofounder">
   </div>
@@ -492,7 +511,20 @@
       <div class="tc-sub">Conselheira · Quem cresce junto</div>
       <div class="tc-expand" id="ex-founder">
         <p class="tc-q">"Eu acredito na visão da NAYA e quero fazer parte da sua construção desde o início."</p>
-        <p class="tc-d">Você contribui com perspectiva, experiência e presença. Participa dos encontros estratégicos e representa a NAYA nos espaços onde já está.<br><br><strong>Meta trimestral:</strong> participar de ao menos 2 dos 3 encontros estratégicos do Circle.<br><br><strong>Benefícios:</strong> todos os benefícios base da cohort · Banco de Talentos no NAYA Indica.</p>
+        <p class="tc-d">Você contribui com perspectiva, experiência e presença. Participa dos encontros estratégicos e representa a NAYA nos espaços onde já está.<br><br><strong>Meta trimestral:</strong> participar de ao menos 2 dos 3 encontros estratégicos do Circle.</p>
+        <div class="ben-block">
+          <p class="ben-title">✦ Exclusivos da Cohort Fundadora</p>
+          <div class="ben-item"><strong>Selo Founder Member</strong> — Seu nome entra para a história da NAYA. Capital reputacional vitalício: LinkedIn, currículo, rede. Referenciado em todos os materiais institucionais.</div>
+          <div class="ben-item"><strong>Renovação com proteção de valor</strong> — A taxa padrão do Circle será R$ 7.000/ano. Você renova pelos dois primeiros ciclos pagando 50% (R$ 3.500 cada). Economia total: R$ 7.000.</div>
+          <div class="ben-item"><strong>Temporada Fundadora do Fala Potência</strong> — Sua participação na primeira temporada é garantida. Conteúdo editado profissionalmente para LinkedIn, portfólio e mídia.</div>
+          <p class="ben-title" style="margin-top:10px">✦ Benefícios de toda a Cohort Fundadora</p>
+          <div class="ben-item"><strong>Fala Potência</strong> — Episódio individual em vídeo, gravado e editado profissionalmente.</div>
+          <div class="ben-item"><strong>Photoshoot editorial</strong> — Sessão profissional no mesmo dia do Fala Potência. 5 a 8 fotos tratadas.</div>
+          <div class="ben-item"><strong>NAYA Indica</strong> — Banco de Talentos (carreira e projetos estratégicos).</div>
+          <div class="ben-item"><strong>NAYA Intro</strong> — Acesso à rede de monetização de conhecimento. Você entrega a experiência, fica com a maior parte da receita.</div>
+          <div class="ben-item"><strong>Build The Room</strong> — Experiências curadas de alto valor relacional com lideranças e investidores.</div>
+          <a class="ben-link" href="beneficios.html" target="_blank">Ver todos os benefícios da cohort →</a>
+        </div>
       </div>
     </div>
     <div class="tc" onclick="trilha(this,'builder')">
@@ -502,7 +534,14 @@
       <div class="tc-sub">Lidere · Quem assume uma frente</div>
       <div class="tc-expand" id="ex-builder">
         <p class="tc-q">"Eu construo. Assumo responsabilidades concretas na operação, experiência das membras ou desenvolvimento dos produtos."</p>
-        <p class="tc-d">Você assume uma frente estratégica da NAYA — produto, marketing, operação ou comunidade — e tem disponibilidade real para entregar.<br><br><strong>Meta trimestral:</strong> 1 entrega concreta na sua frente por trimestre, documentada e registrada.<br><br><strong>Benefícios extras:</strong> sessões de carreira com especialistas · ativação prioritária no NAYA Intro · prioridade no Book of Experts e Speakers & Ativações.</p>
+        <p class="tc-d">Você assume uma frente estratégica da NAYA — produto, marketing, operação ou comunidade — e tem disponibilidade real para entregar.<br><br><strong>Meta trimestral:</strong> 1 entrega concreta na sua frente por trimestre, documentada e registrada.</p>
+        <div class="ben-block">
+          <p class="ben-title">✦ Tudo da Founder Member, mais:</p>
+          <div class="ben-item ben-extra"><strong>Sessões de carreira com especialistas</strong> — Sessões individuais ou em pequeno grupo com mentoras, headhunters e coaches para posicionamento de liderança, transição de carreira, preparo para MBA e estratégia de monetização.</div>
+          <div class="ben-item ben-extra"><strong>Ativação prioritária no NAYA Intro</strong> — Primeiras a ser posicionadas como expert para projetos B2B, com apoio na construção do perfil, formato de sessão e precificação.</div>
+          <div class="ben-item ben-extra"><strong>Prioridade no NAYA Indica</strong> — Book de Experts, oportunidades de speaker e ativações comerciais com sponsors.</div>
+          <a class="ben-link" href="beneficios.html" target="_blank">Ver todos os benefícios da cohort →</a>
+        </div>
       </div>
     </div>
     <div class="tc" onclick="trilha(this,'champion')">
@@ -512,8 +551,51 @@
       <div class="tc-sub">Conexões estratégicas · Quem abre portas</div>
       <div class="tc-expand" id="ex-champion">
         <p class="tc-q">"Eu conecto. Abro portas, gero oportunidades, represento a NAYA e expando o ecossistema através da minha rede."</p>
-        <p class="tc-d">Você representa a NAYA em espaços de poder, gera parcerias e conecta a marca com lideranças e oportunidades institucionais.<br><br><strong>Meta trimestral:</strong> 3 indicações qualificadas ou 1 parceria / visibilidade institucional.<br><br><strong>Benefícios extras:</strong> sessões de carreira com especialistas · ativação prioritária no NAYA Intro · prioridade no Book of Experts e Speakers & Ativações.</p>
+        <p class="tc-d">Você representa a NAYA em espaços de poder, gera parcerias e conecta a marca com lideranças e oportunidades institucionais.<br><br><strong>Meta trimestral:</strong> 3 indicações qualificadas ou 1 parceria / visibilidade institucional.</p>
+        <div class="ben-block">
+          <p class="ben-title">✦ Tudo da Founder Member, mais:</p>
+          <div class="ben-item ben-extra"><strong>Sessões de carreira com especialistas</strong> — Sessões individuais ou em pequeno grupo com mentoras, headhunters e coaches para posicionamento de liderança, transição de carreira, preparo para MBA e estratégia de monetização.</div>
+          <div class="ben-item ben-extra"><strong>Ativação prioritária no NAYA Intro</strong> — Primeiras a ser posicionadas como expert para projetos B2B, com apoio na construção do perfil, formato de sessão e precificação.</div>
+          <div class="ben-item ben-extra"><strong>Prioridade no NAYA Indica</strong> — Book de Experts, oportunidades de speaker e ativações comerciais com sponsors.</div>
+          <div class="f" style="margin-top:12px;padding-top:12px;border-top:1px solid rgba(60,15,21,.1)">
+            <label class="fl" style="font-size:12px;margin-bottom:5px">Você teria interesse em atuar como Champion Leader do seu Hub local?</label>
+            <p class="fh" style="font-size:11px">Champion Leaders fortalecem a presença da NAYA em suas regiões, apoiam outras Champions, lideram iniciativas estratégicas e promovem experiências que expandem a comunidade.</p>
+            <div class="rcards" style="gap:6px">
+              <label class="rc" style="padding:9px 12px" onclick="rcard(this,'champion_leader')">
+                <div class="rcdot"></div><input type="radio" name="champion_leader" value="Sim, quero ser Champion Leader">
+                <div><div class="rc-t" style="font-size:12px">Sim, quero liderar meu hub local</div></div>
+              </label>
+              <label class="rc" style="padding:9px 12px" onclick="rcard(this,'champion_leader')">
+                <div class="rcdot"></div><input type="radio" name="champion_leader" value="Talvez">
+                <div><div class="rc-t" style="font-size:12px">Talvez — quero entender melhor</div></div>
+              </label>
+              <label class="rc" style="padding:9px 12px" onclick="rcard(this,'champion_leader')">
+                <div class="rcdot"></div><input type="radio" name="champion_leader" value="Não por enquanto">
+                <div><div class="rc-t" style="font-size:12px">Não por enquanto</div></div>
+              </label>
+            </div>
+          </div>
+          <a class="ben-link" href="beneficios.html" target="_blank">Ver todos os benefícios da cohort →</a>
+        </div>
       </div>
+    </div>
+  </div>
+
+  <div class="f" style="margin-top:1.5rem">
+    <label class="fl">Disponibilidade de tempo</label>
+    <div class="rcards">
+      <label class="rc" onclick="rcard(this,'disp')">
+        <div class="rcdot"></div><input type="radio" name="disponibilidade" value="Até 4h/semana">
+        <div><div class="rc-t">Até 4h por semana</div><div class="rc-s">Participação estratégica e presença nos encontros</div></div>
+      </label>
+      <label class="rc" onclick="rcard(this,'disp')">
+        <div class="rcdot"></div><input type="radio" name="disponibilidade" value="4-8h/semana">
+        <div><div class="rc-t">4 a 8h por semana</div><div class="rc-s">Envolvimento ativo em projeto ou função definida</div></div>
+      </label>
+      <label class="rc" onclick="rcard(this,'disp')">
+        <div class="rcdot"></div><input type="radio" name="disponibilidade" value="+8h/semana">
+        <div><div class="rc-t">Mais de 8h por semana</div><div class="rc-s">Dedicação plena a uma das funções de liderança</div></div>
+      </label>
     </div>
   </div>
 
@@ -561,7 +643,7 @@
   </div>
   <div class="f">
     <label class="fl">Você estaria disponível para ser listada no NAYA Intro Marketplace?</label>
-    <p class="fh">O NAYA Intro posiciona profissionais curadas para gerar negócios diretos — consultorias, mentorias, projetos, palestras. Fase piloto em 2027, restrita ao Circle.</p>
+    <p class="fh">O NAYA Intro posiciona profissionais curadas para gerar negócios diretos — consultorias, mentorias, projetos, palestras. Fase piloto 2.2026, restrita ao Circle.</p>
     <select name="disponivel_naya_intro">
       <option value="">Selecione...</option>
       <option>Sim, estou pronta</option>
@@ -592,11 +674,11 @@
 <div class="pg-inner">
   <p class="ey">06 — REDE E EXPANSÃO</p>
   <h2 class="ptitle">Seu alcance e potencial de impacto.</h2>
-  <p class="psub">A NAYA cresce sem custo central — através das Champions regionais e das parcerias B2B que cada co-fundadora traz.</p>
+  <p class="psub">A NAYA cresce junto através das Champions regionais e das parcerias B2B que cada founder member traz.</p>
 
   <div class="f">
     <label class="fl">Você tem acesso ou relacionamento com empresas que possam se tornar parceiras ou patrocinadoras da NAYA?</label>
-    <p class="fh">A NAYA busca parceiros B2B em D&I, RH e ESG.</p>
+    <p class="fh">A NAYA busca parceiros que compartilhem nosso compromisso com liderança, inovação, tecnologia, bem-estar e desenvolvimento de talentos.</p>
     <select name="acesso_corporativo">
       <option value="">Selecione...</option>
       <option>Sim, tenho contato com decisores</option>
@@ -609,16 +691,7 @@
     <label class="fl">Se sim, qual empresa? (opcional)</label>
     <input type="text" name="empresa_parceira" placeholder="Nome da empresa e tipo de contato que você tem">
   </div>
-  <div class="f">
-    <label class="fl">Você teria interesse em ser Champion de Hub no seu ecossistema local?</label>
-    <p class="fh">Champions representam a NAYA em eventos, ativam rede e captam leads no seu hub regional — Rio, Recife, Lisboa, Atlanta, Chicago, NY.</p>
-    <select name="interesse_hub">
-      <option value="">Selecione...</option>
-      <option>Sim, adoraria representar a NAYA aqui</option>
-      <option>Talvez, mas quero entender melhor</option>
-      <option>Não por enquanto</option>
-    </select>
-  </div>
+
   <div class="f">
     <label class="fl">Em quais espaços você já tem presença ou visibilidade?</label>
     <div class="chips">
@@ -663,29 +736,52 @@
   <div class="ibox">
     <p class="itag">Investimento de entrada na NAYA</p>
     <div class="ival">R$ 2.500</div>
-    <p class="idesc">Este é o valor-base de entrada para co-fundadoras do Circle. O valor está diretamente alinhado ao que cada membra pode contribuir para as operações da NAYA — quanto mais estrutural a sua contribuição, mais esse investimento pode ser conversado com a Carol. O que entra em troca: acesso ao Circle curado, Rede de Indicação Ativa, visibilidade no NayaCast, Fala Potência e photoshoots, e acesso ao Intro Marketplace em 2027. Exatamente 15 vagas nesta cohort.</p>
+    <p class="idesc">Valor único para todas as trilhas. Não é mensalidade — é aporte de construção.<br>Condições de parcelamento definidas na conversa com a Carol e time.</p>
     <p class="iq">Você tem condições de fazer esse investimento?</p>
     <div class="ipills">
-      <span class="ip" onclick="ipill(this)">Sim, consigo os R$ 2.500</span>
-      <span class="ip" onclick="ipill(this)">Sim, mas preciso parcelar</span>
+      <span class="ip" onclick="ipill(this)">Sim, consigo investir</span>
+      <span class="ip" onclick="ipill(this)">Sim, mas quero parcelar</span>
     </div>
     <input type="hidden" id="h-invest" name="situacao_investimento">
   </div>
 
-  <div class="f">
-    <label class="fl">Disponibilidade de tempo</label>
-    <div class="rcards">
-      <label class="rc" onclick="rcard(this,'disp')">
-        <div class="rcdot"></div><input type="radio" name="disponibilidade" value="Até 4h/semana">
-        <div><div class="rc-t">Até 4h por semana</div><div class="rc-s">Participação estratégica e presença nos encontros</div></div>
+  <div class="f" id="parcela-block" style="display:none">
+    <label class="fl">Forma de pagamento preferida</label>
+    <div class="rcards" style="gap:6px">
+      <label class="rc" style="padding:9px 12px" onclick="rcard(this,'pagamento')">
+        <div class="rcdot"></div><input type="radio" name="forma_pagamento" value="Cartão de crédito">
+        <div><div class="rc-t" style="font-size:13px">Cartão de crédito</div></div>
       </label>
-      <label class="rc" onclick="rcard(this,'disp')">
-        <div class="rcdot"></div><input type="radio" name="disponibilidade" value="4-8h/semana">
-        <div><div class="rc-t">4 a 8h por semana</div><div class="rc-s">Envolvimento ativo em projeto ou função definida</div></div>
+      <label class="rc" style="padding:9px 12px" onclick="rcard(this,'pagamento')">
+        <div class="rcdot"></div><input type="radio" name="forma_pagamento" value="Pix">
+        <div><div class="rc-t" style="font-size:13px">Pix</div></div>
       </label>
-      <label class="rc" onclick="rcard(this,'disp')">
-        <div class="rcdot"></div><input type="radio" name="disponibilidade" value="+8h/semana">
-        <div><div class="rc-t">Mais de 8h por semana</div><div class="rc-s">Dedicação plena a uma das funções de liderança</div></div>
+      <label class="rc" style="padding:9px 12px" onclick="rcard(this,'pagamento')">
+        <div class="rcdot"></div><input type="radio" name="forma_pagamento" value="Boleto">
+        <div><div class="rc-t" style="font-size:13px">Boleto</div></div>
+      </label>
+    </div>
+  </div>
+
+  <div class="f" id="parcelas-block" style="display:none">
+    <label class="fl">Quantas vezes deseja parcelar?</label>
+    <p class="fh">A operação pode ter acréscimos bancários.</p>
+    <div class="rcards" style="gap:6px">
+      <label class="rc" style="padding:9px 12px" onclick="rcard(this,'parcelas')">
+        <div class="rcdot"></div><input type="radio" name="num_parcelas" value="2x">
+        <div><div class="rc-t" style="font-size:13px">2x</div></div>
+      </label>
+      <label class="rc" style="padding:9px 12px" onclick="rcard(this,'parcelas')">
+        <div class="rcdot"></div><input type="radio" name="num_parcelas" value="3x">
+        <div><div class="rc-t" style="font-size:13px">3x</div></div>
+      </label>
+      <label class="rc" style="padding:9px 12px" onclick="rcard(this,'parcelas')">
+        <div class="rcdot"></div><input type="radio" name="num_parcelas" value="4x">
+        <div><div class="rc-t" style="font-size:13px">4x</div></div>
+      </label>
+      <label class="rc" style="padding:9px 12px" onclick="rcard(this,'parcelas')">
+        <div class="rcdot"></div><input type="radio" name="num_parcelas" value="5x">
+        <div><div class="rc-t" style="font-size:13px">5x</div></div>
       </label>
     </div>
   </div>
@@ -710,7 +806,7 @@
     <div class="cc"><span id="c-ex">0</span> / 400</div>
   </div>
   <div class="f">
-    <label class="fl">Você já conhece alguma co-fundadora da NAYA?</label>
+    <label class="fl">Você já conhece alguma founder member da NAYA?</label>
     <div class="rcards">
       <label class="rc" onclick="rcard(this,'conhece'); document.getElementById('conhece-f').style.display='block'">
         <div class="rcdot"></div><input type="radio" name="conhece_membra" value="Sim">
@@ -856,12 +952,22 @@ function showIndicada(sel) {
   document.getElementById('cond-ind').classList.toggle('open', sel.value === 'Indicação de uma membra do Circle');
 }
 
-// ── INVEST PILLS ──
+
+// ── SETOR OUTRO ──
+function showSetor(sel) {
+  document.getElementById('cond-setor-outro').classList.toggle('open', sel.value === 'Outro');
+}
+
+// ── INVEST PILLS with parcelamento logic ──
 function ipill(el) {
   document.querySelectorAll('.ip').forEach(p => p.classList.remove('on'));
   el.classList.add('on');
   document.getElementById('h-invest').value = el.textContent.trim();
+  const parcelar = el.textContent.includes('parcelar');
+  document.getElementById('parcela-block').style.display = parcelar ? 'block' : 'none';
+  document.getElementById('parcelas-block').style.display = parcelar ? 'block' : 'none';
 }
+
 
 // ── CHAR COUNT ──
 function cc(el, id) { document.getElementById(id).textContent = el.value.length; }
