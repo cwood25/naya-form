@@ -13,108 +13,92 @@
       --verde:  #373f27;
       --sage:   #80856e;
       --rose:   #a36873;
-      --cream2: #f9f5ef;
+      --cream:  #f9f5ef;
       --border: rgba(60,15,21,0.12);
-      --font-d: 'Cormorant Garamond', Georgia, serif;
-      --font-b: 'DM Sans', system-ui, sans-serif;
+      --fd: 'Cormorant Garamond', Georgia, serif;
+      --fb: 'DM Sans', system-ui, sans-serif;
     }
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    html, body { height: 100%; overflow: hidden; }
-    body { font-family: var(--font-b); background: var(--cream2); color: var(--vinho); }
-
-    /* ── SLIDER WRAPPER ── */
-    .slider-outer { width: 100%; height: 100vh; overflow: hidden; position: relative; }
-    .slider-track {
-      display: flex;
-      height: 100%;
-      transition: transform 0.55s cubic-bezier(0.77,0,0.18,1);
-      will-change: transform;
-    }
-    .slide {
-      min-width: 100vw;
-      height: 100vh;
-      overflow-y: auto;
-      overflow-x: hidden;
-      flex-shrink: 0;
-      display: flex;
-      flex-direction: column;
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: var(--fb);
+      background: var(--cream);
+      color: var(--vinho);
+      min-height: 100vh;
     }
 
-    /* ── TOP BAR ── */
+    /* ── TOPBAR ── */
     .topbar {
       position: fixed; top: 0; left: 0; right: 0; z-index: 100;
-      height: 48px;
-      background: var(--vinho);
+      height: 46px; background: var(--vinho);
       display: flex; align-items: center; justify-content: space-between;
-      padding: 0 1.75rem;
-      pointer-events: none;
+      padding: 0 1.5rem; pointer-events: none;
     }
-    .topbar-logo {
-      font-family: var(--font-d);
-      font-size: 18px; letter-spacing: 0.2em;
-      color: var(--creme); font-weight: 400;
-    }
-    .topbar-right {
-      font-size: 10px; letter-spacing: 0.16em;
-      text-transform: uppercase; color: var(--rose);
-    }
+    .topbar-logo { font-family: var(--fd); font-size: 17px; letter-spacing: .22em; color: var(--creme); font-weight: 400; }
+    .topbar-right { font-size: 9px; letter-spacing: .18em; text-transform: uppercase; color: var(--rose); }
 
     /* ── PROGRESS ── */
-    .progress-bar {
-      position: fixed; top: 48px; left: 0; right: 0; z-index: 99;
-      height: 2px; background: rgba(60,15,21,0.1);
+    .prog-bar { position: fixed; top: 46px; left: 0; right: 0; z-index: 99; height: 2px; background: rgba(60,15,21,.08); }
+    .prog-fill { height: 100%; background: var(--rose); transition: width .45s ease; width: 0; }
+    .prog-label { position: fixed; top: 50px; right: 1.25rem; z-index: 99; font-size: 9px; letter-spacing: .13em; text-transform: uppercase; color: var(--sage); }
+
+    /* ── PAGE SYSTEM ── */
+    /* Each .pg is absolutely positioned, full viewport.
+       Active one is visible, others are off-screen above/below via translateY */
+    .pages-wrap { position: relative; min-height: 100vh; }
+
+    .pg {
+      position: absolute; top: 0; left: 0; right: 0;
+      min-height: 100vh;
+      display: flex; flex-direction: column;
+      opacity: 0; pointer-events: none;
+      transform: translateY(40px);
+      transition: opacity .45s ease, transform .45s ease;
     }
-    .progress-fill {
-      height: 100%; background: var(--rose);
-      transition: width 0.4s ease; width: 0%;
+    .pg.active {
+      opacity: 1; pointer-events: all;
+      transform: translateY(0);
+      position: relative; /* take space when active */
     }
-    .progress-label {
-      position: fixed; top: 52px; right: 1.5rem; z-index: 99;
-      font-size: 9px; letter-spacing: 0.14em;
-      text-transform: uppercase; color: var(--sage);
+    .pg.exit-up {
+      opacity: 0; transform: translateY(-40px);
+      pointer-events: none;
     }
 
-    /* ── INNER CONTENT ── */
-    .slide-inner {
-      max-width: 580px;
-      width: 100%;
-      margin: 0 auto;
-      padding: 80px 1.5rem 5rem;
-      flex: 1;
+    /* ── LANDING ── */
+    .pg-land {
+      background: var(--vinho);
+      justify-content: center; align-items: center;
+      text-align: center; padding: 5rem 1.5rem 3rem;
     }
+    .land-logo { font-family: var(--fd); font-size: clamp(56px,14vw,108px); font-weight: 300; letter-spacing: .28em; color: var(--creme); line-height: 1; margin-bottom: 1.5rem; }
+    .land-ey { font-size: 10px; letter-spacing: .2em; text-transform: uppercase; color: var(--rose); font-weight: 500; margin-bottom: 1.5rem; }
+    .land-h { font-family: var(--fd); font-size: clamp(26px,6vw,46px); font-weight: 400; color: var(--creme); line-height: 1.2; margin-bottom: 1.25rem; }
+    .land-sub { font-size: 14px; font-weight: 300; color: rgba(231,224,205,.7); line-height: 1.75; margin-bottom: 2.5rem; }
+    .land-cta {
+      display: inline-block; border: 1px solid rgba(231,224,205,.35);
+      background: transparent; color: var(--creme); font-family: var(--fb);
+      font-size: 11px; letter-spacing: .2em; text-transform: uppercase;
+      padding: 14px 38px; cursor: pointer; transition: all .2s; border-radius: 2px;
+    }
+    .land-cta:hover { background: rgba(231,224,205,.1); border-color: var(--creme); }
+    .land-fn { margin-top: 2rem; font-size: 11px; color: rgba(231,224,205,.38); line-height: 1.7; }
 
-    /* ── TYPOGRAPHY ── */
-    .eyebrow {
-      font-size: 10px; letter-spacing: 0.2em;
-      text-transform: uppercase; color: var(--rose);
-      font-weight: 500; margin-bottom: 0.5rem;
-    }
-    .page-title {
-      font-family: var(--font-d);
-      font-size: clamp(28px, 6vw, 42px);
-      font-weight: 400; color: var(--vinho);
-      line-height: 1.15; margin-bottom: 0.4rem;
-    }
-    .page-sub {
-      font-size: 13px; color: var(--sage);
-      line-height: 1.6; margin-bottom: 2rem;
-    }
-    .divider { border: none; border-top: 1px solid var(--border); margin: 1.5rem 0; }
+    /* ── FORM PAGES ── */
+    .pg-form { padding: 80px 0 5rem; }
+    .pg-inner { max-width: 560px; margin: 0 auto; padding: 0 1.5rem; }
+    .ey { font-size: 9px; letter-spacing: .2em; text-transform: uppercase; color: var(--rose); font-weight: 600; margin-bottom: .5rem; }
+    .ptitle { font-family: var(--fd); font-size: clamp(26px,5.5vw,40px); font-weight: 400; color: var(--vinho); line-height: 1.15; margin-bottom: .4rem; }
+    .psub { font-size: 13px; color: var(--sage); line-height: 1.6; margin-bottom: 2rem; }
+    hr.div { border: none; border-top: 1px solid var(--border); margin: 1.5rem 0; }
 
     /* ── FIELDS ── */
-    .field { margin-bottom: 1.25rem; }
-    .field:last-of-type { margin-bottom: 0; }
-    .field-label {
-      display: block; font-size: 13px; font-weight: 500;
-      color: var(--vinho); margin-bottom: 5px;
-    }
-    .field-hint {
-      font-size: 11.5px; color: var(--sage);
-      margin-bottom: 7px; line-height: 1.5;
-    }
-    input[type=text], input[type=email], input[type=tel],
-    input[type=url], select, textarea {
-      width: 100%; font-family: var(--font-b); font-size: 14px;
+    .f { margin-bottom: 1.2rem; }
+    .f:last-child { margin-bottom: 0; }
+    .fl { display: block; font-size: 13px; font-weight: 500; color: var(--vinho); margin-bottom: 5px; }
+    .fh { font-size: 11.5px; color: var(--sage); margin-bottom: 7px; line-height: 1.5; }
+    input[type=text], input[type=email], input[type=tel], input[type=url], select, textarea {
+      width: 100%; font-family: var(--fb); font-size: 14px;
       color: var(--vinho); background: #fff;
       border: 1px solid var(--border); border-radius: 6px;
       padding: 0 13px; height: 42px; outline: none;
@@ -122,145 +106,112 @@
       -webkit-appearance: none; appearance: none;
     }
     input:focus, select:focus, textarea:focus {
-      border-color: var(--rose);
-      box-shadow: 0 0 0 3px rgba(163,104,115,.12);
+      border-color: var(--rose); box-shadow: 0 0 0 3px rgba(163,104,115,.12);
     }
     select {
       background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'%3E%3Cpath fill='%23888' d='M5 6L0 0h10z'/%3E%3C/svg%3E");
       background-repeat: no-repeat; background-position: right 13px center;
       padding-right: 34px; cursor: pointer;
     }
-    textarea {
-      height: auto; min-height: 90px;
-      padding: 11px 13px; resize: vertical; line-height: 1.55;
-    }
-    .char-count { font-size: 11px; color: #ccc; text-align: right; margin-top: 3px; }
-    .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
-    @media (max-width: 480px) { .two-col { grid-template-columns: 1fr; } }
+    textarea { height: auto; min-height: 90px; padding: 11px 13px; resize: vertical; line-height: 1.55; }
+    .cc { font-size: 11px; color: #ccc; text-align: right; margin-top: 3px; }
+    .two { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+    @media (max-width: 480px) { .two { grid-template-columns: 1fr; } }
 
     /* ── CHIPS ── */
-    .chip-wrap { display: flex; flex-wrap: wrap; gap: 7px; margin-top: 4px; }
+    .chips { display: flex; flex-wrap: wrap; gap: 7px; margin-top: 4px; }
     .chip {
-      padding: 7px 14px; border-radius: 20px;
-      border: 1px solid var(--border);
-      font-size: 12px; cursor: pointer;
-      transition: all .15s; color: #666; background: #fff;
-      user-select: none; line-height: 1;
+      padding: 7px 14px; border-radius: 20px; border: 1px solid var(--border);
+      font-size: 12px; cursor: pointer; transition: all .15s;
+      color: #666; background: #fff; user-select: none; line-height: 1;
     }
     .chip:hover { border-color: var(--rose); color: var(--vinho); }
     .chip.on { background: var(--vinho); color: var(--creme); border-color: var(--vinho); }
 
     /* ── RADIO CARDS ── */
-    .rcard-wrap { display: flex; flex-direction: column; gap: 8px; margin-top: 4px; }
-    .rcard {
+    .rcards { display: flex; flex-direction: column; gap: 8px; margin-top: 4px; }
+    .rc {
       border: 1.5px solid var(--border); border-radius: 8px;
-      padding: 12px 15px; cursor: pointer;
-      transition: all .15s; background: #fff;
-      display: flex; gap: 12px; align-items: flex-start;
+      padding: 12px 15px; cursor: pointer; transition: all .15s;
+      background: #fff; display: flex; gap: 12px; align-items: flex-start;
     }
-    .rcard:hover { border-color: var(--rose); }
-    .rcard.on { border-color: var(--vinho); background: rgba(60,15,21,.03); }
-    .rcard input[type=radio] { display: none; }
-    .rcard-dot {
+    .rc:hover { border-color: var(--rose); }
+    .rc.on { border-color: var(--vinho); background: rgba(60,15,21,.03); }
+    .rc input[type=radio] { display: none; }
+    .rcdot {
       width: 16px; height: 16px; border-radius: 50%;
       border: 1.5px solid #ccc; flex-shrink: 0; margin-top: 2px;
       transition: all .15s; position: relative;
     }
-    .rcard.on .rcard-dot { border-color: var(--vinho); background: var(--vinho); }
-    .rcard.on .rcard-dot::after {
-      content: ''; position: absolute;
-      width: 6px; height: 6px; border-radius: 50%;
-      background: #fff; top: 50%; left: 50%;
+    .rc.on .rcdot { border-color: var(--vinho); background: var(--vinho); }
+    .rc.on .rcdot::after {
+      content: ''; position: absolute; width: 6px; height: 6px;
+      border-radius: 50%; background: #fff; top: 50%; left: 50%;
       transform: translate(-50%,-50%);
     }
-    .rcard-title { font-size: 13px; font-weight: 500; color: var(--vinho); }
-    .rcard-sub { font-size: 11px; color: var(--sage); margin-top: 1px; line-height: 1.4; }
+    .rc-t { font-size: 13px; font-weight: 500; color: var(--vinho); }
+    .rc-s { font-size: 11px; color: var(--sage); margin-top: 1px; line-height: 1.4; }
 
     /* ── TRILHA CARDS ── */
-    .trilha-wrap { display: flex; flex-direction: column; gap: 10px; margin-top: 4px; }
-    .trilha-card {
+    .trilhas { display: flex; flex-direction: column; gap: 10px; margin-top: 4px; }
+    .tc {
       border: 1.5px solid var(--border); border-radius: 10px;
-      padding: 1rem 1.25rem; cursor: pointer;
-      transition: all .18s; background: #fff; position: relative;
+      padding: 1rem 1.25rem; cursor: pointer; transition: all .18s; background: #fff;
     }
-    .trilha-card:hover { border-color: var(--rose); }
-    .trilha-card.on { border-color: var(--vinho); background: rgba(60,15,21,.025); }
-    .trilha-tag {
-      font-size: 9px; letter-spacing: .14em; text-transform: uppercase;
-      color: var(--rose); font-weight: 600; margin-bottom: 3px;
-    }
-    .trilha-title {
-      font-family: var(--font-d); font-size: 24px;
-      font-weight: 500; color: var(--vinho); margin-bottom: 2px; line-height: 1.1;
-    }
-    .trilha-sub { font-size: 12px; color: var(--sage); }
-    .trilha-expand {
-      display: none; margin-top: 12px; padding-top: 12px;
-      border-top: 1px solid var(--border); animation: fdn .2s ease;
-    }
-    .trilha-expand.open { display: block; }
-    .trilha-quote {
-      font-family: var(--font-d); font-size: 15px; font-style: italic;
-      color: var(--vinho2); line-height: 1.55; margin-bottom: 8px;
-    }
-    .trilha-desc { font-size: 12.5px; color: #555; line-height: 1.65; }
-    .trilha-desc strong { color: var(--vinho); }
+    .tc:hover { border-color: var(--rose); }
+    .tc.on { border-color: var(--vinho); background: rgba(60,15,21,.025); }
+    .tc input[type=radio] { display: none; }
+    .tc-tag { font-size: 9px; letter-spacing: .14em; text-transform: uppercase; color: var(--rose); font-weight: 600; margin-bottom: 3px; }
+    .tc-title { font-family: var(--fd); font-size: 24px; font-weight: 500; color: var(--vinho); margin-bottom: 2px; line-height: 1.1; }
+    .tc-sub { font-size: 12px; color: var(--sage); }
+    .tc-expand { display: none; margin-top: 12px; padding-top: 12px; border-top: 1px solid var(--border); animation: fdn .2s ease; }
+    .tc-expand.open { display: block; }
+    .tc-q { font-family: var(--fd); font-size: 15px; font-style: italic; color: var(--vinho2); line-height: 1.55; margin-bottom: 8px; }
+    .tc-d { font-size: 12.5px; color: #555; line-height: 1.65; }
+    .tc-d strong { color: var(--vinho); }
 
     /* ── REDE CARDS ── */
-    .rede-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 4px; }
-    @media (max-width: 480px) { .rede-grid { grid-template-columns: 1fr; } }
-    .rede-card {
+    .rede-g { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 4px; }
+    @media (max-width: 480px) { .rede-g { grid-template-columns: 1fr; } }
+    .rg {
       border: 1.5px solid var(--border); border-radius: 8px;
-      padding: 12px; cursor: pointer; transition: all .15s;
-      background: #fff; text-align: center;
+      padding: 12px; cursor: pointer; transition: all .15s; background: #fff; text-align: center;
     }
-    .rede-card:hover { border-color: var(--rose); }
-    .rede-card.on { border-color: var(--vinho); background: rgba(60,15,21,.03); }
-    .rede-icon { font-size: 22px; margin-bottom: 4px; }
-    .rede-label { font-size: 12px; font-weight: 500; color: var(--vinho); }
-    .rede-inputs { display: none; margin-top: 10px; animation: fdn .2s ease; }
-    .rede-inputs.open { display: block; }
-    .rede-inputs-label { font-size: 11px; color: var(--sage); margin-bottom: 5px; }
-    .rede-inputs input { margin-bottom: 6px; height: 36px; font-size: 12.5px; }
-    .rede-inputs input:last-child { margin-bottom: 0; }
+    .rg:hover { border-color: var(--rose); }
+    .rg.on { border-color: var(--vinho); background: rgba(60,15,21,.03); }
+    .rg-icon { font-size: 22px; margin-bottom: 4px; }
+    .rg-lbl { font-size: 12px; font-weight: 500; color: var(--vinho); }
+    .rg-sub { display: none; margin-top: 10px; animation: fdn .2s ease; }
+    .rg-sub.open { display: block; }
+    .rg-sub-lbl { font-size: 11px; color: var(--sage); margin-bottom: 5px; }
+    .rg-sub input { margin-bottom: 6px; height: 36px; font-size: 12.5px; }
+    .rg-sub input:last-child { margin-bottom: 0; }
 
-    /* ── INVEST BLOCK ── */
-    .invest-box {
-      background: var(--vinho); border-radius: 10px;
-      padding: 1.5rem; color: var(--creme); margin-bottom: 1.25rem;
-    }
-    .invest-tag {
-      font-size: 9px; letter-spacing: .18em; text-transform: uppercase;
-      color: var(--rose); font-weight: 600; margin-bottom: 6px;
-    }
-    .invest-val {
-      font-family: var(--font-d); font-size: 52px;
-      font-weight: 300; color: var(--creme); line-height: 1; margin-bottom: 6px;
-    }
-    .invest-desc { font-size: 12.5px; color: rgba(231,224,205,.7); line-height: 1.65; }
-    .invest-question { font-size: 14px; font-weight: 500; color: var(--creme); margin: 1rem 0 .6rem; }
-    .invest-pills { display: flex; flex-wrap: wrap; gap: 8px; }
-    .ipill {
+    /* ── INVEST ── */
+    .ibox { background: var(--vinho); border-radius: 10px; padding: 1.5rem; color: var(--creme); margin-bottom: 1.25rem; }
+    .itag { font-size: 9px; letter-spacing: .18em; text-transform: uppercase; color: var(--rose); font-weight: 600; margin-bottom: 6px; }
+    .ival { font-family: var(--fd); font-size: 52px; font-weight: 300; color: var(--creme); line-height: 1; margin-bottom: 6px; }
+    .idesc { font-size: 12.5px; color: rgba(231,224,205,.7); line-height: 1.65; }
+    .iq { font-size: 14px; font-weight: 500; color: var(--creme); margin: 1rem 0 .6rem; }
+    .ipills { display: flex; flex-wrap: wrap; gap: 8px; }
+    .ip {
       padding: 8px 16px; border-radius: 20px;
       border: 1px solid rgba(231,224,205,.25);
       font-size: 12px; cursor: pointer; transition: all .15s;
       color: rgba(231,224,205,.75); background: transparent; user-select: none;
     }
-    .ipill:hover { border-color: var(--creme); color: var(--creme); }
-    .ipill.on { background: var(--creme); color: var(--vinho); border-color: var(--creme); font-weight: 600; }
+    .ip:hover { border-color: var(--creme); color: var(--creme); }
+    .ip.on { background: var(--creme); color: var(--vinho); border-color: var(--creme); font-weight: 600; }
 
     /* ── TERMS ── */
-    .terms-box {
+    .terms {
       display: flex; gap: 12px; align-items: flex-start;
       background: rgba(60,15,21,.04); border: 1px solid var(--border);
       border-radius: 7px; padding: 14px; margin-top: 8px;
     }
-    .terms-box input[type=checkbox] {
-      width: auto; height: auto; margin-top: 3px;
-      accent-color: var(--vinho); flex-shrink: 0; cursor: pointer;
-    }
-    .terms-text { font-size: 12px; color: #555; line-height: 1.6; }
-    .terms-text strong { color: var(--vinho); }
+    .terms input[type=checkbox] { width: auto; height: auto; margin-top: 3px; accent-color: var(--vinho); flex-shrink: 0; cursor: pointer; }
+    .terms-t { font-size: 12px; color: #555; line-height: 1.6; }
+    .terms-t strong { color: var(--vinho); }
 
     /* ── BUTTONS ── */
     .btn-row { display: flex; gap: 10px; margin-top: 2rem; }
@@ -268,89 +219,44 @@
       flex: 1; background: var(--vinho); color: var(--creme);
       border: none; border-radius: 6px; padding: 14px;
       font-size: 11px; letter-spacing: .16em; text-transform: uppercase;
-      font-family: var(--font-b); font-weight: 500; cursor: pointer;
-      transition: background .15s;
+      font-family: var(--fb); font-weight: 500; cursor: pointer; transition: background .15s;
     }
     .btn-p:hover { background: var(--vinho2); }
     .btn-p:disabled { opacity: .4; cursor: not-allowed; }
     .btn-s {
       background: transparent; color: var(--sage);
       border: 1px solid var(--border); border-radius: 6px;
-      padding: 14px 20px; font-size: 11px; letter-spacing: .12em;
-      text-transform: uppercase; font-family: var(--font-b);
-      cursor: pointer; transition: all .15s;
+      padding: 14px 20px; font-size: 11px; letter-spacing: .12em; text-transform: uppercase;
+      font-family: var(--fb); cursor: pointer; transition: all .15s;
     }
     .btn-s:hover { border-color: var(--sage); color: var(--vinho); }
     .btn-syl {
       width: 100%; background: transparent;
-      color: var(--sage); border: 1px solid rgba(60,15,21,0.2);
-      border-radius: 6px; padding: 12px; font-size: 11px;
-      letter-spacing: .16em; text-transform: uppercase;
-      font-family: var(--font-b); cursor: pointer; transition: all .15s;
-      margin-top: 10px;
+      color: var(--sage); border: 1px solid rgba(60,15,21,.18);
+      border-radius: 6px; padding: 12px; font-size: 11px; letter-spacing: .16em;
+      text-transform: uppercase; font-family: var(--fb); cursor: pointer; transition: all .15s; margin-top: 10px;
     }
     .btn-syl:hover { border-color: var(--rose); color: var(--vinho); }
-    .status-err {
-      display: none; padding: 12px 16px; border-radius: 6px;
-      font-size: 12px; margin-top: 10px; text-align: center;
-      background: #FCEBEB; color: #A32D2D; border: 1px solid #E24B4A;
-    }
+    .err { display: none; padding: 12px 16px; border-radius: 6px; font-size: 12px; margin-top: 10px; text-align: center; background: #FCEBEB; color: #A32D2D; border: 1px solid #E24B4A; }
 
-    /* ── LANDING ── */
-    #s0 { background: var(--vinho); justify-content: center; align-items: center; }
-    .landing { text-align: center; padding: 2rem 1.5rem; max-width: 520px; margin: 0 auto; }
-    .land-logo {
-      font-family: var(--font-d); font-size: clamp(52px,14vw,100px);
-      font-weight: 300; letter-spacing: .28em; color: var(--creme);
-      line-height: 1; margin-bottom: 1.5rem;
-    }
-    .land-ey {
-      font-size: 10px; letter-spacing: .2em; text-transform: uppercase;
-      color: var(--rose); font-weight: 500; margin-bottom: 1.5rem;
-    }
-    .land-h {
-      font-family: var(--font-d); font-size: clamp(26px,6vw,44px);
-      font-weight: 400; color: var(--creme); line-height: 1.2; margin-bottom: 1.25rem;
-    }
-    .land-sub {
-      font-size: 15px; font-weight: 300;
-      color: rgba(231,224,205,.7); line-height: 1.7; margin-bottom: 2.5rem;
-    }
-    .land-cta {
-      display: inline-block; border: 1px solid rgba(231,224,205,.35);
-      background: transparent; color: var(--creme); font-family: var(--font-b);
-      font-size: 11px; letter-spacing: .2em; text-transform: uppercase;
-      padding: 14px 36px; cursor: pointer; transition: all .2s; border-radius: 2px;
-    }
-    .land-cta:hover { background: rgba(231,224,205,.1); border-color: var(--creme); }
-    .land-fn { margin-top: 1.75rem; font-size: 11px; color: rgba(231,224,205,.4); line-height: 1.7; }
-
-    /* ── BYE / THANKS ── */
-    #s-bye { background: var(--vinho); justify-content: center; align-items: center; }
-    #s-thanks { background: var(--verde); justify-content: center; align-items: center; }
-    .end-inner { text-align: center; padding: 3rem 1.5rem; max-width: 460px; margin: 0 auto; }
-    .end-logo {
-      font-family: var(--font-d); font-size: 32px;
-      letter-spacing: .2em; color: var(--creme); margin-bottom: 2rem;
-    }
-    .end-h {
-      font-family: var(--font-d); font-size: 28px; font-weight: 400;
-      color: var(--creme); line-height: 1.3; margin-bottom: 1rem;
-    }
-    .end-p { font-size: 14px; color: rgba(231,224,205,.6); line-height: 1.7; }
-
-    /* ── INTENT FOLLOW ── */
+    /* ── FOLLOW ── */
     .follow { display: none; margin-top: 10px; animation: fdn .2s ease; }
     .follow.open { display: block; }
-
-    @keyframes fdn {
-      from { opacity:0; transform: translateY(-5px); }
-      to   { opacity:1; transform: translateY(0); }
-    }
-
-    /* ── COND ── */
     .cond { display: none; }
     .cond.open { display: block; }
+
+    /* ── END PAGES ── */
+    .pg-end {
+      min-height: 100vh; display: flex; justify-content: center; align-items: center;
+    }
+    .pg-end-bye { background: var(--vinho); }
+    .pg-end-thanks { background: var(--verde); }
+    .end-inner { text-align: center; padding: 3rem 1.5rem; max-width: 460px; margin: 0 auto; }
+    .end-logo { font-family: var(--fd); font-size: 34px; letter-spacing: .22em; color: var(--creme); margin-bottom: 2rem; }
+    .end-h { font-family: var(--fd); font-size: 30px; font-weight: 400; color: var(--creme); line-height: 1.25; margin-bottom: 1rem; }
+    .end-p { font-size: 14px; color: rgba(231,224,205,.65); line-height: 1.75; }
+
+    @keyframes fdn { from { opacity:0; transform:translateY(-5px); } to { opacity:1; transform:translateY(0); } }
   </style>
 </head>
 <body>
@@ -359,581 +265,499 @@
   <span class="topbar-logo">NAYA</span>
   <span class="topbar-right">Circle · Cohort Fundadora</span>
 </div>
-<div class="progress-bar" id="pbar" style="display:none"><div class="progress-fill" id="pfill"></div></div>
-<div class="progress-label" id="plabel" style="display:none"></div>
+<div class="prog-bar" id="pbar" style="display:none"><div class="prog-fill" id="pfill"></div></div>
+<div class="prog-label" id="plbl" style="display:none"></div>
 
-<div class="slider-outer">
-<div class="slider-track" id="track">
+<div class="pages-wrap" id="wrap">
 
-<!-- ══════════ SLIDE 0 — LANDING ══════════ -->
-<div class="slide" id="s0">
-  <div class="landing">
-    <div class="land-logo">NAYA</div>
-    <p class="land-ey">NAYA Circle · Cohort Fundadora</p>
-    <h1 class="land-h">A NAYA está se construindo.<br>E algumas mulheres vão estar no começo.</h1>
-    <p class="land-sub">Este formulário é o início de uma conversa.<br>Leva menos de 10 minutos.</p>
-    <button class="land-cta" onclick="go(1)">QUERO FAZER PARTE →</button>
-    <p class="land-fn">As candidaturas são avaliadas individualmente.<br>A confirmação da sua vaga acontece após uma conversa com a Carol e time.</p>
-  </div>
+<!-- ════════════════════════ P0 — LANDING ════════════════════════ -->
+<div class="pg pg-land active" id="p0">
+  <div class="land-logo">NAYA</div>
+  <p class="land-ey">NAYA Circle · Cohort Fundadora</p>
+  <h1 class="land-h">A NAYA está se construindo.<br>E algumas mulheres vão estar no começo.</h1>
+  <p class="land-sub">Este formulário é o início de uma conversa.<br>Leva menos de 10 minutos.</p>
+  <button class="land-cta" onclick="go(1)">QUERO FAZER PARTE →</button>
+  <p class="land-fn">As candidaturas são avaliadas individualmente.<br>A confirmação da sua vaga acontece após uma conversa com a Carol e time.</p>
 </div>
 
-<!-- ══════════ SLIDE 1 — SOBRE VOCÊ ══════════ -->
-<div class="slide" id="s1">
-  <div class="slide-inner">
-    <p class="eyebrow">01 — SOBRE VOCÊ</p>
-    <h2 class="page-title">Informações pessoais.</h2>
-    <p class="page-sub">Informações de contato e posição atual.</p>
+<!-- ════════════════════════ P1 — SOBRE VOCÊ ════════════════════════ -->
+<div class="pg pg-form" id="p1">
+<div class="pg-inner">
+  <p class="ey">01 — SOBRE VOCÊ</p>
+  <h2 class="ptitle">Informações pessoais.</h2>
+  <p class="psub">Informações de contato e posição atual.</p>
 
-    <div class="two-col">
-      <div class="field">
-        <label class="field-label" for="nome">Nome completo *</label>
-        <input type="text" id="nome" name="nome_completo" placeholder="Seu nome como você usa profissionalmente" required>
-      </div>
-      <div class="field">
-        <label class="field-label" for="email">E-mail *</label>
-        <input type="email" id="email" name="email" placeholder="seu@email.com" required>
-      </div>
+  <div class="two">
+    <div class="f"><label class="fl">Nome completo *</label><input type="text" name="nome_completo" placeholder="Seu nome como você usa profissionalmente" required></div>
+    <div class="f"><label class="fl">E-mail *</label><input type="email" name="email" placeholder="seu@email.com" required></div>
+  </div>
+  <div class="two">
+    <div class="f"><label class="fl">WhatsApp *</label><input type="tel" name="whatsapp" placeholder="+55 (11) 99999-9999" required></div>
+    <div class="f"><label class="fl">LinkedIn *</label><input type="url" name="linkedin_url" placeholder="linkedin.com/in/seu-perfil" required></div>
+  </div>
+  <div class="two">
+    <div class="f"><label class="fl">Cargo atual *</label><input type="text" name="cargo_atual" placeholder="Ex: Diretora de Produto · VP de Marketing · Fundadora" required></div>
+    <div class="f"><label class="fl">Empresa ou projeto atual *</label><input type="text" name="empresa_atual" placeholder="Nome da empresa, startup ou projeto que você lidera" required></div>
+  </div>
+  <div class="f">
+    <label class="fl">Onde você está baseada? *</label>
+    <select name="cidade_hub" required>
+      <option value="">Selecione...</option>
+      <option>São Paulo</option><option>Rio de Janeiro</option><option>Recife</option>
+      <option>Belo Horizonte</option><option>Brasília</option><option>Salvador</option>
+      <option>Fortaleza</option><option>Manaus</option><option>Porto Alegre</option>
+      <option>Curitiba</option><option>California (EUA)</option><option>Atlanta (EUA)</option>
+      <option>Chicago (EUA)</option><option>Nova York (EUA)</option><option>Miami (EUA)</option>
+      <option>Londres (UK)</option><option>Portugal</option>
+      <option>Outra cidade no Brasil</option><option>Outro país</option>
+    </select>
+  </div>
+  <div class="f">
+    <label class="fl">Como você se identifica profissionalmente? *</label>
+    <p class="fh">Selecione todos que se aplicam.</p>
+    <div class="chips">
+      <span class="chip" onclick="chip(this,'perfis')">Executiva sênior</span>
+      <span class="chip" onclick="chip(this,'perfis')">Diretora / VP / C-level</span>
+      <span class="chip" onclick="chip(this,'perfis')">Fundadora / Co-fundadora</span>
+      <span class="chip" onclick="chip(this,'perfis')">Consultora independente</span>
+      <span class="chip" onclick="chip(this,'perfis')">Mentora</span>
+      <span class="chip" onclick="chip(this,'perfis')">Investidora / Angel</span>
+      <span class="chip" onclick="chip(this,'perfis')">Palestrante</span>
+      <span class="chip" onclick="chip(this,'perfis')">Especialista / Advisory</span>
+      <span class="chip" onclick="chip(this,'perfis')">Acadêmica / Pesquisadora</span>
+      <span class="chip" onclick="chip(this,'perfis')">Criadora de conteúdo</span>
     </div>
-    <div class="two-col">
-      <div class="field">
-        <label class="field-label" for="whats">WhatsApp *</label>
-        <input type="tel" id="whats" name="whatsapp" placeholder="+55 (11) 99999-9999" required>
-      </div>
-      <div class="field">
-        <label class="field-label" for="linkedin">LinkedIn *</label>
-        <input type="url" id="linkedin" name="linkedin_url" placeholder="linkedin.com/in/seu-perfil" required>
-      </div>
-    </div>
-    <div class="two-col">
-      <div class="field">
-        <label class="field-label" for="cargo">Cargo atual *</label>
-        <input type="text" id="cargo" name="cargo_atual" placeholder="Ex: Diretora de Produto · VP de Marketing · Fundadora" required>
-      </div>
-      <div class="field">
-        <label class="field-label" for="empresa">Empresa ou projeto atual *</label>
-        <input type="text" id="empresa" name="empresa_atual" placeholder="Nome da empresa, startup ou projeto que você lidera" required>
-      </div>
-    </div>
-    <div class="field">
-      <label class="field-label" for="cidade">Onde você está baseada? *</label>
-      <select id="cidade" name="cidade_hub" required>
-        <option value="">Selecione...</option>
-        <option>São Paulo</option><option>Rio de Janeiro</option><option>Recife</option>
-        <option>Belo Horizonte</option><option>Brasília</option><option>Salvador</option>
-        <option>Fortaleza</option><option>Manaus</option><option>Porto Alegre</option>
-        <option>Curitiba</option><option>California (EUA)</option><option>Atlanta (EUA)</option>
-        <option>Chicago (EUA)</option><option>Nova York (EUA)</option><option>Miami (EUA)</option>
-        <option>Londres (UK)</option><option>Portugal</option>
-        <option>Outra cidade no Brasil</option><option>Outro país</option>
-      </select>
-    </div>
-    <div class="field">
-      <label class="field-label">Como você se identifica profissionalmente? *</label>
-      <p class="field-hint">Selecione todos que se aplicam.</p>
-      <div class="chip-wrap">
-        <span class="chip" onclick="chip(this,'perfis')">Executiva sênior</span>
-        <span class="chip" onclick="chip(this,'perfis')">Diretora / VP / C-level</span>
-        <span class="chip" onclick="chip(this,'perfis')">Fundadora / Co-fundadora</span>
-        <span class="chip" onclick="chip(this,'perfis')">Consultora independente</span>
-        <span class="chip" onclick="chip(this,'perfis')">Mentora</span>
-        <span class="chip" onclick="chip(this,'perfis')">Investidora / Angel</span>
-        <span class="chip" onclick="chip(this,'perfis')">Palestrante</span>
-        <span class="chip" onclick="chip(this,'perfis')">Especialista / Advisory</span>
-        <span class="chip" onclick="chip(this,'perfis')">Acadêmica / Pesquisadora</span>
-        <span class="chip" onclick="chip(this,'perfis')">Criadora de conteúdo</span>
-      </div>
-      <input type="hidden" id="perfis-h" name="perfil_profissional">
-    </div>
-    <div class="field">
-      <label class="field-label" for="setor">Setor principal de atuação *</label>
-      <select id="setor" name="setor_atuacao" required>
-        <option value="">Selecione...</option>
-        <option>Tecnologia e produto</option><option>Finanças e investimentos</option>
-        <option>Marketing e comunicação</option><option>Saúde e bem-estar</option>
-        <option>Educação e desenvolvimento</option><option>Jurídico e regulatório</option>
-        <option>Diversidade, equidade e inclusão</option><option>Inovação e startups</option>
-        <option>Cultura e entretenimento</option><option>ESG e impacto social</option>
-        <option>Varejo e consumo</option><option>Recursos Humanos</option><option>Outro</option>
-      </select>
-    </div>
+    <input type="hidden" id="h-perfis" name="perfil_profissional">
+  </div>
+  <div class="f">
+    <label class="fl">Setor principal de atuação *</label>
+    <select name="setor_atuacao" required>
+      <option value="">Selecione...</option>
+      <option>Tecnologia e produto</option><option>Finanças e investimentos</option>
+      <option>Marketing e comunicação</option><option>Saúde e bem-estar</option>
+      <option>Educação e desenvolvimento</option><option>Jurídico e regulatório</option>
+      <option>Diversidade, equidade e inclusão</option><option>Inovação e startups</option>
+      <option>Cultura e entretenimento</option><option>ESG e impacto social</option>
+      <option>Varejo e consumo</option><option>Recursos Humanos</option><option>Outro</option>
+    </select>
+  </div>
 
-    <hr class="divider">
+  <hr class="div">
 
-    <!-- INTENÇÃO -->
-    <div class="field">
-      <label class="field-label">Você tem interesse em fazer parte da Cohort Fundadora? *</label>
-      <div class="rcard-wrap">
-        <label class="rcard" onclick="intent(this,'entrar')">
-          <div class="rcard-dot"></div>
-          <input type="radio" name="intencao" value="Quero entrar">
-          <div><div class="rcard-title">Quero entrar</div><div class="rcard-sub">Estou pronta para seguir com a candidatura</div></div>
-        </label>
-        <label class="rcard" onclick="intent(this,'conversar')">
-          <div class="rcard-dot"></div>
-          <input type="radio" name="intencao" value="Quero conversar mais">
-          <div><div class="rcard-title">Quero conversar mais</div><div class="rcard-sub">Tenho dúvidas antes de decidir</div></div>
-        </label>
-        <label class="rcard" onclick="intent(this,'nao')">
-          <div class="rcard-dot"></div>
-          <input type="radio" name="intencao" value="Não vou entrar agora">
-          <div><div class="rcard-title">Não vou entrar agora</div><div class="rcard-sub">Fica para uma próxima</div></div>
-        </label>
-      </div>
-      <div class="follow" id="follow-conversar">
-        <div class="field" style="margin-top:10px">
-          <label class="field-label" for="duvidas">Especifique os tópicos que impactam a sua decisão</label>
-          <textarea id="duvidas" name="duvidas_decisao" maxlength="400" placeholder="Ex: ainda tenho dúvidas sobre o modelo de investimento, disponibilidade de tempo..." oninput="cc(this,'dc')"></textarea>
-          <div class="char-count"><span id="dc">0</span> / 400</div>
-        </div>
-      </div>
+  <div class="f">
+    <label class="fl">Você tem interesse em fazer parte da Cohort Fundadora? *</label>
+    <div class="rcards">
+      <label class="rc" onclick="intent(this,'entrar')">
+        <div class="rcdot"></div><input type="radio" name="intencao" value="Quero entrar">
+        <div><div class="rc-t">Quero entrar</div><div class="rc-s">Estou pronta para seguir com a candidatura</div></div>
+      </label>
+      <label class="rc" onclick="intent(this,'conversar')">
+        <div class="rcdot"></div><input type="radio" name="intencao" value="Quero conversar mais">
+        <div><div class="rc-t">Quero conversar mais</div><div class="rc-s">Tenho dúvidas antes de decidir</div></div>
+      </label>
+      <label class="rc" onclick="intent(this,'nao')">
+        <div class="rcdot"></div><input type="radio" name="intencao" value="Não vou entrar agora">
+        <div><div class="rc-t">Não vou entrar agora</div><div class="rc-s">Fica para uma próxima</div></div>
+      </label>
     </div>
-
-    <div class="btn-row" id="btnrow1">
-      <button class="btn-p" id="btn1" onclick="go(2)">Continuar →</button>
-    </div>
-    <div id="bye-row" style="display:none; margin-top:10px">
-      <button class="btn-syl" onclick="go('bye')">See you later →</button>
+    <div class="follow" id="follow-conv">
+      <div class="f" style="margin-top:10px">
+        <label class="fl">Especifique os tópicos que impactam a sua decisão</label>
+        <textarea name="duvidas_decisao" maxlength="400" placeholder="Ex: ainda tenho dúvidas sobre o modelo de investimento, disponibilidade de tempo..." oninput="cc(this,'c-dd')"></textarea>
+        <div class="cc"><span id="c-dd">0</span> / 400</div>
+      </div>
     </div>
   </div>
-</div>
 
-<!-- ══════════ SLIDE 2 — TRAJETÓRIA ══════════ -->
-<div class="slide" id="s2">
-  <div class="slide-inner">
-    <p class="eyebrow">02 — O QUE VOCÊ JÁ CONSTRUIU</p>
-    <h2 class="page-title">Antes de falar do futuro, conte sobre o caminho.</h2>
-    <p class="page-sub">Não queremos o currículo. Queremos entender o que você já moveu.</p>
-
-    <div class="field">
-      <label class="field-label" for="anos">Há quantos anos você atua em posição de liderança ou como especialista reconhecida? *</label>
-      <select id="anos" name="anos_lideranca" required>
-        <option value="">Selecione...</option>
-        <option>Menos de 3 anos</option>
-        <option>3 a 5 anos</option>
-        <option>5 a 10 anos</option>
-        <option>Mais de 10 anos</option>
-        <option>Mais de 15 anos</option>
-      </select>
-    </div>
-    <div class="field">
-      <label class="field-label" for="construiu">O que você já construiu — e chegou a algum lugar? *</label>
-      <p class="field-hint">Pode ser uma empresa, um programa, uma comunidade, um produto, uma rede. Algo concreto que você iniciou ou liderou.</p>
-      <textarea id="construiu" name="historico_construcao" maxlength="600" placeholder="Ex: Criei o programa de mentoria X que formou Y líderes. Fundei a startup Z que chegou a X usuários. Lancei a comunidade W que hoje tem..." oninput="cc(this,'cc1')" required></textarea>
-      <div class="char-count"><span id="cc1">0</span> / 600</div>
-    </div>
-    <div class="field">
-      <label class="field-label" for="agora">Por que agora? *</label>
-      <p class="field-hint">O que mudou na sua vida ou carreira que faz este ser o momento de fazer parte de algo como a NAYA?</p>
-      <textarea id="agora" name="por_que_agora" maxlength="500" oninput="cc(this,'cc2')" required></textarea>
-      <div class="char-count"><span id="cc2">0</span> / 500</div>
-    </div>
-
-    <div class="btn-row">
-      <button class="btn-s" onclick="go(1)">← Voltar</button>
-      <button class="btn-p" onclick="go(3)">Continuar →</button>
-    </div>
+  <div class="btn-row" id="btnrow-1">
+    <button class="btn-p" onclick="go(2)">Continuar →</button>
+  </div>
+  <div id="bye-row" style="display:none; margin-top:10px">
+    <button class="btn-syl" onclick="go('bye')">See you later →</button>
   </div>
 </div>
-
-<!-- ══════════ SLIDE 3 — CONEXÃO COM A NAYA ══════════ -->
-<div class="slide" id="s3">
-  <div class="slide-inner">
-    <p class="eyebrow">03 — COMO VOCÊ CHEGOU AQUI</p>
-    <h2 class="page-title">Toda trajetória tem um ponto de partida.</h2>
-    <p class="page-sub"> </p>
-
-    <div class="field">
-      <label class="field-label" for="origem">Como você chegou à NAYA? *</label>
-      <select id="origem" name="origem_candidatura" required onchange="showIndicada(this)">
-        <option value="">Selecione...</option>
-        <option>Indicação de uma membra do Circle</option>
-        <option>Redes sociais (Instagram ou LinkedIn)</option>
-        <option>NayaCast</option>
-        <option>Evento ou palestra</option>
-        <option>Convite direto da Carol</option>
-        <option>Imprensa ou matéria</option>
-        <option>Outro</option>
-      </select>
-    </div>
-
-    <!-- CONDICIONAL 3.2 -->
-    <div class="cond" id="cond-indicada">
-      <div class="field">
-        <label class="field-label" for="indicada">Quem te indicou?</label>
-        <input type="text" id="indicada" name="indicada_por" placeholder="Nome da pessoa que te trouxe">
-      </div>
-    </div>
-
-    <div class="field">
-      <label class="field-label" for="motivacao">O que te move a ser Founder Member da NAYA? *</label>
-      <p class="field-hint">Não precisa ser perfeito. Queremos entender o que te trouxe até aqui — não o que você acha que queremos ouvir.</p>
-      <textarea id="motivacao" name="motivacao" maxlength="800" oninput="cc(this,'cc3')" required></textarea>
-      <div class="char-count"><span id="cc3">0</span> / 800</div>
-    </div>
-
-    <hr class="divider">
-
-    <div class="field">
-      <label class="field-label">Que rede ou ecossistema você carrega com você?</label>
-      <p class="field-hint">Selecione o(s) tipo(s) e cite até 3 exemplos em cada.</p>
-      <div class="rede-grid">
-        <div class="rede-card" onclick="rede(this,'pessoas')">
-          <div class="rede-icon">👥</div>
-          <div class="rede-label">Pessoas</div>
-        </div>
-        <div class="rede-card" onclick="rede(this,'corp')">
-          <div class="rede-icon">🏢</div>
-          <div class="rede-label">Corporativo</div>
-        </div>
-        <div class="rede-card" onclick="rede(this,'eventos')">
-          <div class="rede-icon">🎤</div>
-          <div class="rede-label">Eventos</div>
-        </div>
-        <div class="rede-card" onclick="rede(this,'redes')">
-          <div class="rede-icon">🔗</div>
-          <div class="rede-label">Redes / Comunidades</div>
-        </div>
-      </div>
-      <div class="rede-inputs" id="ri-pessoas">
-        <p class="rede-inputs-label">Cite até 3 pessoas / líderes de referência da sua rede:</p>
-        <input type="text" name="rede_pessoas_1" placeholder="1ª conexão">
-        <input type="text" name="rede_pessoas_2" placeholder="2ª conexão">
-        <input type="text" name="rede_pessoas_3" placeholder="3ª conexão">
-      </div>
-      <div class="rede-inputs" id="ri-corp">
-        <p class="rede-inputs-label">Cite até 3 empresas / organizações:</p>
-        <input type="text" name="rede_corp_1" placeholder="1ª empresa">
-        <input type="text" name="rede_corp_2" placeholder="2ª empresa">
-        <input type="text" name="rede_corp_3" placeholder="3ª empresa">
-      </div>
-      <div class="rede-inputs" id="ri-eventos">
-        <p class="rede-inputs-label">Cite até 3 eventos / conferências:</p>
-        <input type="text" name="rede_evento_1" placeholder="1º evento">
-        <input type="text" name="rede_evento_2" placeholder="2º evento">
-        <input type="text" name="rede_evento_3" placeholder="3º evento">
-      </div>
-      <div class="rede-inputs" id="ri-redes">
-        <p class="rede-inputs-label">Cite até 3 comunidades / grupos / redes:</p>
-        <input type="text" name="rede_comunidade_1" placeholder="1ª rede">
-        <input type="text" name="rede_comunidade_2" placeholder="2ª rede">
-        <input type="text" name="rede_comunidade_3" placeholder="3ª rede">
-      </div>
-    </div>
-
-    <div class="field">
-      <label class="field-label">O que te move a ser co-fundadora da NAYA?</label>
-      <p class="field-hint">Selecione todos que se aplicam.</p>
-      <div class="chip-wrap">
-        <span class="chip" onclick="chip(this,'motiv')">Visibilidade</span>
-        <span class="chip" onclick="chip(this,'motiv')">Expandir meu negócio</span>
-        <span class="chip" onclick="chip(this,'motiv')">Diversificação de renda / receita</span>
-        <span class="chip" onclick="chip(this,'motiv')">Aprendizado e impacto</span>
-        <span class="chip" onclick="chip(this,'motiv')">Rede curada</span>
-      </div>
-      <input type="hidden" id="motiv-h" name="motivacoes_cofounder">
-    </div>
-
-    <div class="btn-row">
-      <button class="btn-s" onclick="go(2)">← Voltar</button>
-      <button class="btn-p" onclick="go(4)">Continuar →</button>
-    </div>
-  </div>
 </div>
 
-<!-- ══════════ SLIDE 4 — TRILHA ══════════ -->
-<div class="slide" id="s4">
-  <div class="slide-inner">
-    <p class="eyebrow">04 — SUA TRILHA</p>
-    <h2 class="page-title">Como você quer contribuir.</h2>
-    <p class="page-sub">Todas as 15 são Founder Members. A trilha define como você contribui — e os benefícios adicionais que você acessa.</p>
+<!-- ════════════════════════ P2 — TRAJETÓRIA ════════════════════════ -->
+<div class="pg pg-form" id="p2">
+<div class="pg-inner">
+  <p class="ey">02 — O QUE VOCÊ JÁ CONSTRUIU</p>
+  <h2 class="ptitle">Antes de falar do futuro, conte sobre o caminho.</h2>
+  <p class="psub">Não queremos o currículo. Queremos entender o que você já moveu.</p>
 
-    <div class="trilha-wrap">
-      <div class="trilha-card" onclick="trilha(this,'founder')">
-        <input type="radio" name="trilha" value="Founder Member">
-        <div class="trilha-tag">TRILHA BASE</div>
-        <div class="trilha-title">Founder Member</div>
-        <div class="trilha-sub">Conselheira · Quem cresce junto</div>
-        <div class="trilha-expand" id="ex-founder">
-          <p class="trilha-quote">"Eu acredito na visão da NAYA e quero fazer parte da sua construção desde o início."</p>
-          <p class="trilha-desc">Você contribui com perspectiva, experiência e presença. Participa dos encontros estratégicos e representa a NAYA nos espaços onde já está.<br><br><strong>Meta trimestral:</strong> participar de ao menos 2 dos 3 encontros estratégicos do Circle.<br><br><strong>Benefícios:</strong> todos os benefícios base da cohort · Banco de Talentos no NAYA Indica.</p>
-        </div>
-      </div>
+  <div class="f">
+    <label class="fl">Há quantos anos você atua em posição de liderança ou como especialista reconhecida? *</label>
+    <select name="anos_lideranca" required>
+      <option value="">Selecione...</option>
+      <option>Menos de 3 anos</option><option>3 a 5 anos</option>
+      <option>5 a 10 anos</option><option>Mais de 10 anos</option><option>Mais de 15 anos</option>
+    </select>
+  </div>
+  <div class="f">
+    <label class="fl">O que você já construiu — e chegou a algum lugar? *</label>
+    <p class="fh">Pode ser uma empresa, um programa, uma comunidade, um produto, uma rede. Algo concreto que você iniciou ou liderou.</p>
+    <textarea name="historico_construcao" maxlength="600" placeholder="Ex: Criei o programa de mentoria X que formou Y líderes. Fundei a startup Z que chegou a X usuários. Lancei a comunidade W que hoje tem..." oninput="cc(this,'c-hc')" required></textarea>
+    <div class="cc"><span id="c-hc">0</span> / 600</div>
+  </div>
+  <div class="f">
+    <label class="fl">Por que agora? *</label>
+    <p class="fh">O que mudou na sua vida ou carreira que faz este ser o momento de fazer parte de algo como a NAYA?</p>
+    <textarea name="por_que_agora" maxlength="500" oninput="cc(this,'c-pa')" required></textarea>
+    <div class="cc"><span id="c-pa">0</span> / 500</div>
+  </div>
 
-      <div class="trilha-card" onclick="trilha(this,'builder')">
-        <input type="radio" name="trilha" value="Builder">
-        <div class="trilha-tag">+ BENEFÍCIOS EXCLUSIVOS</div>
-        <div class="trilha-title">Builder</div>
-        <div class="trilha-sub">Lidere · Quem assume uma frente</div>
-        <div class="trilha-expand" id="ex-builder">
-          <p class="trilha-quote">"Eu construo. Assumo responsabilidades concretas na operação, experiência das membras ou desenvolvimento dos produtos."</p>
-          <p class="trilha-desc">Você assume uma frente estratégica da NAYA — produto, marketing, operação ou comunidade — e tem disponibilidade real para entregar.<br><br><strong>Meta trimestral:</strong> 1 entrega concreta na sua frente por trimestre, documentada e registrada.<br><br><strong>Benefícios extras:</strong> sessões de carreira com especialistas · ativação prioritária no NAYA Intro · prioridade no Book of Experts e Speakers & Ativações.</p>
-        </div>
-      </div>
-
-      <div class="trilha-card" onclick="trilha(this,'champion')">
-        <input type="radio" name="trilha" value="Champion">
-        <div class="trilha-tag">+ BENEFÍCIOS EXCLUSIVOS</div>
-        <div class="trilha-title">Champion</div>
-        <div class="trilha-sub">Conexões estratégicas · Quem abre portas</div>
-        <div class="trilha-expand" id="ex-champion">
-          <p class="trilha-quote">"Eu conecto. Abro portas, gero oportunidades, represento a NAYA e expando o ecossistema através da minha rede."</p>
-          <p class="trilha-desc">Você representa a NAYA em espaços de poder, gera parcerias e conecta a marca com lideranças e oportunidades institucionais.<br><br><strong>Meta trimestral:</strong> 3 indicações qualificadas ou 1 parceria / visibilidade institucional.<br><br><strong>Benefícios extras:</strong> sessões de carreira com especialistas · ativação prioritária no NAYA Intro · prioridade no Book of Experts e Speakers & Ativações.</p>
-        </div>
-      </div>
-    </div>
-
-    <div class="btn-row">
-      <button class="btn-s" onclick="go(3)">← Voltar</button>
-      <button class="btn-p" onclick="go(5)">Continuar →</button>
-    </div>
+  <div class="btn-row">
+    <button class="btn-s" onclick="go(1)">← Voltar</button>
+    <button class="btn-p" onclick="go(3)">Continuar →</button>
   </div>
 </div>
-
-<!-- ══════════ SLIDE 5 — EXPERTISE ══════════ -->
-<div class="slide" id="s5">
-  <div class="slide-inner">
-    <p class="eyebrow">05 — EXPERTISE E MONETIZAÇÃO</p>
-    <h2 class="page-title">Seu posicionamento profissional.</h2>
-    <p class="page-sub">Essas informações nos ajudam a posicioná-la no NAYA Intro Marketplace e no Book of Experts & Speakers.</p>
-
-    <div class="field">
-      <label class="field-label" for="tema">Qual é o seu tema principal de expertise? *</label>
-      <p class="field-hint">Em uma frase: o que você domina e pelo que você é chamada.</p>
-      <input type="text" id="tema" name="expertise_tema" placeholder="Ex: liderança feminina em tech · finanças para empreendedoras · saúde mental corporativa" required>
-    </div>
-    <div class="field">
-      <label class="field-label">Como você já monetiza ou deseja monetizar seu conhecimento?</label>
-      <p class="field-hint">Selecione todos que se aplicam.</p>
-      <div class="chip-wrap">
-        <span class="chip" onclick="chip(this,'monetiza')">Consultoria</span>
-        <span class="chip" onclick="chip(this,'monetiza')">Mentoria</span>
-        <span class="chip" onclick="chip(this,'monetiza')">Palestras</span>
-        <span class="chip" onclick="chip(this,'monetiza')">Workshops</span>
-        <span class="chip" onclick="chip(this,'monetiza')">Cursos / conteúdo digital</span>
-        <span class="chip" onclick="chip(this,'monetiza')">Advisory / board</span>
-        <span class="chip" onclick="chip(this,'monetiza')">Ainda não monetizo — quero começar</span>
-      </div>
-      <input type="hidden" id="monetiza-h" name="formas_monetizacao">
-    </div>
-    <div class="field">
-      <label class="field-label" for="valor_h">Qual o seu valor de referência por hora de consultoria ou mentoria?</label>
-      <select id="valor_h" name="valor_hora_referencia">
-        <option value="">Selecione...</option>
-        <option>Ainda estou definindo</option>
-        <option>Até R$ 200/h</option>
-        <option>R$ 200 a R$ 500/h</option>
-        <option>R$ 500 a R$ 1.000/h</option>
-        <option>Acima de R$ 1.000/h</option>
-        <option>Trabalho com projetos fechados</option>
-      </select>
-    </div>
-    <div class="field">
-      <label class="field-label" for="disp_intro">Você estaria disponível para ser listada no NAYA Intro Marketplace como consultora, mentora ou palestrante?</label>
-      <p class="field-hint">O NAYA Intro é a segunda camada do ecossistema: profissionais curadas se posicionam para gerar negócios diretos — consultorias, mentorias, projetos, palestras. Fase piloto em 2027, restrita ao Circle.</p>
-      <select id="disp_intro" name="disponivel_naya_intro">
-        <option value="">Selecione...</option>
-        <option>Sim, estou pronta</option>
-        <option>Sim, mas ainda preciso estruturar meu posicionamento</option>
-        <option>Não por enquanto</option>
-      </select>
-    </div>
-    <div class="field">
-      <label class="field-label" for="idiomas">Você atua ou tem presença em outros idiomas além do português?</label>
-      <div class="chip-wrap">
-        <span class="chip" onclick="chip(this,'idioma')">Inglês</span>
-        <span class="chip" onclick="chip(this,'idioma')">Espanhol</span>
-        <span class="chip" onclick="chip(this,'idioma')">Francês</span>
-        <span class="chip" onclick="chip(this,'idioma')">Apenas português por enquanto</span>
-      </div>
-      <input type="hidden" id="idioma-h" name="idiomas">
-    </div>
-
-    <div class="btn-row">
-      <button class="btn-s" onclick="go(4)">← Voltar</button>
-      <button class="btn-p" onclick="go(6)">Continuar →</button>
-    </div>
-  </div>
 </div>
 
-<!-- ══════════ SLIDE 6 — REDE E EXPANSÃO ══════════ -->
-<div class="slide" id="s6">
-  <div class="slide-inner">
-    <p class="eyebrow">06 — REDE E EXPANSÃO</p>
-    <h2 class="page-title">Seu alcance e potencial de impacto.</h2>
-    <p class="page-sub">A NAYA cresce sem custo central — através das Champions regionais e internacionais e das parcerias B2B que cada co-fundadora traz.</p>
+<!-- ════════════════════════ P3 — CONEXÃO COM A NAYA ════════════════════════ -->
+<div class="pg pg-form" id="p3">
+<div class="pg-inner">
+  <p class="ey">03 — COMO VOCÊ CHEGOU AQUI</p>
+  <h2 class="ptitle">Toda trajetória tem um ponto de partida.</h2>
+  <p class="psub"> </p>
 
-    <div class="field">
-      <label class="field-label" for="acesso_corp">Você tem acesso ou relacionamento com empresas que possam se tornar parceiras ou patrocinadoras da NAYA?</label>
-      <p class="field-hint">A NAYA busca parceiros B2B em D&I, RH e ESG — empresas como Coca-Cola, BTG, iFood, Google, entre outros.</p>
-      <select id="acesso_corp" name="acesso_corporativo">
-        <option value="">Selecione...</option>
-        <option>Sim, tenho contato com decisores</option>
-        <option>Sim, tenho acesso mas ainda não explorei</option>
-        <option>Tenho acesso indireto (colegas, ex-colegas)</option>
-        <option>Ainda não</option>
-      </select>
-    </div>
-    <div class="field">
-      <label class="field-label" for="empresa_parceira">Se sim, qual empresa? (opcional)</label>
-      <input type="text" id="empresa_parceira" name="empresa_parceira" placeholder="Nome da empresa e tipo de contato que você tem">
-    </div>
-    <div class="field">
-      <label class="field-label" for="hub">Você teria interesse em ser Champion de Hub no seu ecossistema local?</label>
-      <p class="field-hint">Champions representam a NAYA em eventos, ativam rede e captam leads no seu hub regional — Rio, Recife, Lisboa, Atlanta, Chicago, NY.</p>
-      <select id="hub" name="interesse_hub">
-        <option value="">Selecione...</option>
-        <option>Sim, adoraria representar a NAYA aqui</option>
-        <option>Talvez, mas quero entender melhor</option>
-        <option>Não por enquanto</option>
-      </select>
-    </div>
-    <div class="field">
-      <label class="field-label">Em quais tipos de espaço você já tem presença ou visibilidade?</label>
-      <p class="field-hint">Selecione todos que se aplicam.</p>
-      <div class="chip-wrap">
-        <span class="chip" onclick="chip(this,'presenca')">Eventos de liderança</span>
-        <span class="chip" onclick="chip(this,'presenca')">Conferências de negócios</span>
-        <span class="chip" onclick="chip(this,'presenca')">Comunidades online</span>
-        <span class="chip" onclick="chip(this,'presenca')">Programas de aceleração</span>
-        <span class="chip" onclick="chip(this,'presenca')">Podcasts / mídia</span>
-        <span class="chip" onclick="chip(this,'presenca')">Iniciativas DEI corporativo</span>
-        <span class="chip" onclick="chip(this,'presenca')">Universidades / academia</span>
-        <span class="chip" onclick="chip(this,'presenca')">Governo / setor público</span>
-        <span class="chip" onclick="chip(this,'presenca')">Internacional / diáspora</span>
-      </div>
-      <input type="hidden" id="presenca-h" name="espacos_visibilidade">
-    </div>
-    <div class="field">
-      <label class="field-label" for="conexoes_intl">Você tem conexões relevantes fora do Brasil? (Atlanta, Chicago, NY, California, Lisboa...)</label>
-      <p class="field-hint">A imersão em Salvador 2027 conecta mulheres negras dos EUA — empresárias, investidoras, líderes da diáspora.</p>
-      <select id="conexoes_intl" name="conexoes_internacionais">
-        <option value="">Selecione...</option>
-        <option>Sim, tenho conexões ativas no exterior</option>
-        <option>Sim, mas conexões mais informais</option>
-        <option>Ainda não, mas tenho interesse</option>
-        <option>Não</option>
-      </select>
-    </div>
+  <div class="f">
+    <label class="fl">Como você chegou à NAYA? *</label>
+    <select name="origem_candidatura" required onchange="showIndicada(this)">
+      <option value="">Selecione...</option>
+      <option>Indicação de uma membra do Circle</option>
+      <option>Redes sociais (Instagram ou LinkedIn)</option>
+      <option>NayaCast</option><option>Evento ou palestra</option>
+      <option>Convite direto da Carol</option><option>Imprensa ou matéria</option><option>Outro</option>
+    </select>
+  </div>
+  <div class="cond" id="cond-ind">
+    <div class="f"><label class="fl">Quem te indicou?</label><input type="text" name="indicada_por" placeholder="Nome da pessoa que te trouxe"></div>
+  </div>
+  <div class="f">
+    <label class="fl">O que te move a ser Founder Member da NAYA? *</label>
+    <p class="fh">Não precisa ser perfeito. Queremos entender o que te trouxe até aqui — não o que você acha que queremos ouvir.</p>
+    <textarea name="motivacao" maxlength="800" oninput="cc(this,'c-mo')" required></textarea>
+    <div class="cc"><span id="c-mo">0</span> / 800</div>
+  </div>
 
-    <div class="btn-row">
-      <button class="btn-s" onclick="go(5)">← Voltar</button>
-      <button class="btn-p" onclick="go(7)">Continuar →</button>
+  <hr class="div">
+
+  <div class="f">
+    <label class="fl">Que rede ou ecossistema você carrega com você?</label>
+    <p class="fh">Selecione o(s) tipo(s) e cite até 3 exemplos em cada.</p>
+    <div class="rede-g">
+      <div class="rg" onclick="rede(this,'pessoas')"><div class="rg-icon">👥</div><div class="rg-lbl">Pessoas</div></div>
+      <div class="rg" onclick="rede(this,'corp')"><div class="rg-icon">🏢</div><div class="rg-lbl">Corporativo</div></div>
+      <div class="rg" onclick="rede(this,'eventos')"><div class="rg-icon">🎤</div><div class="rg-lbl">Eventos</div></div>
+      <div class="rg" onclick="rede(this,'redes')"><div class="rg-icon">🔗</div><div class="rg-lbl">Redes / Comunidades</div></div>
     </div>
+    <div class="rg-sub" id="rs-pessoas"><p class="rg-sub-lbl">Cite até 3 pessoas / líderes:</p><input type="text" name="rede_pessoas_1" placeholder="1ª conexão"><input type="text" name="rede_pessoas_2" placeholder="2ª conexão"><input type="text" name="rede_pessoas_3" placeholder="3ª conexão"></div>
+    <div class="rg-sub" id="rs-corp"><p class="rg-sub-lbl">Cite até 3 empresas / organizações:</p><input type="text" name="rede_corp_1" placeholder="1ª empresa"><input type="text" name="rede_corp_2" placeholder="2ª empresa"><input type="text" name="rede_corp_3" placeholder="3ª empresa"></div>
+    <div class="rg-sub" id="rs-eventos"><p class="rg-sub-lbl">Cite até 3 eventos / conferências:</p><input type="text" name="rede_evento_1" placeholder="1º evento"><input type="text" name="rede_evento_2" placeholder="2º evento"><input type="text" name="rede_evento_3" placeholder="3º evento"></div>
+    <div class="rg-sub" id="rs-redes"><p class="rg-sub-lbl">Cite até 3 comunidades / grupos:</p><input type="text" name="rede_comunidade_1" placeholder="1ª rede"><input type="text" name="rede_comunidade_2" placeholder="2ª rede"><input type="text" name="rede_comunidade_3" placeholder="3ª rede"></div>
+  </div>
+
+  <div class="f">
+    <label class="fl">O que te move a ser co-fundadora da NAYA?</label>
+    <p class="fh">Selecione todos que se aplicam.</p>
+    <div class="chips">
+      <span class="chip" onclick="chip(this,'motiv')">Visibilidade</span>
+      <span class="chip" onclick="chip(this,'motiv')">Expandir meu negócio</span>
+      <span class="chip" onclick="chip(this,'motiv')">Diversificação de renda / receita</span>
+      <span class="chip" onclick="chip(this,'motiv')">Aprendizado e impacto</span>
+      <span class="chip" onclick="chip(this,'motiv')">Rede curada</span>
+    </div>
+    <input type="hidden" id="h-motiv" name="motivacoes_cofounder">
+  </div>
+
+  <div class="btn-row">
+    <button class="btn-s" onclick="go(2)">← Voltar</button>
+    <button class="btn-p" onclick="go(4)">Continuar →</button>
   </div>
 </div>
-
-<!-- ══════════ SLIDE 7 — INVESTIMENTO ══════════ -->
-<div class="slide" id="s7">
-  <div class="slide-inner">
-    <p class="eyebrow">07 — COMPROMISSO E INVESTIMENTO</p>
-    <h2 class="page-title">Sua entrada no ecossistema.</h2>
-    <p class="page-sub">Todas as trilhas têm o mesmo investimento de entrada. O que muda é o nível de contribuição e os benefícios.</p>
-
-    <div class="invest-box">
-      <p class="invest-tag">Investimento de entrada na NAYA</p>
-      <div class="invest-val">R$ 2.500</div>
-      <p class="invest-desc">Este é o valor-base de entrada para co-fundadoras do Circle. O valor está diretamente alinhado ao que cada membra pode contribuir para as operações da NAYA — quanto mais estrutural a sua contribuição, mais esse investimento pode ser conversado com a Carol. O que entra em troca: acesso ao Circle curado, Rede de Indicação Ativa, visibilidade no NayaCast, Fala Potência e photoshoots, e acesso ao Intro Marketplace em 2027. Exatamente 15 vagas nesta cohort.</p>
-      <p class="invest-question">Você tem condições de fazer esse investimento?</p>
-      <div class="invest-pills">
-        <span class="ipill" onclick="ipill(this)">Sim, consigo os R$ 2.500</span>
-        <span class="ipill" onclick="ipill(this)">Sim, mas preciso parcelar</span>
-        <span class="ipill" onclick="ipill(this)">Quero conversar sobre redução por contribuição</span>
-        <span class="ipill" onclick="ipill(this)">Preciso de mais informações</span>
-      </div>
-      <input type="hidden" id="invest-h" name="situacao_investimento">
-    </div>
-
-    <div class="field">
-      <label class="field-label">Disponibilidade de tempo</label>
-      <div class="rcard-wrap">
-        <label class="rcard" onclick="rcard(this,'disp')">
-          <div class="rcard-dot"></div>
-          <input type="radio" name="disponibilidade" value="Até 4h/semana">
-          <div><div class="rcard-title">Até 4h por semana</div><div class="rcard-sub">Participação estratégica e presença nos encontros</div></div>
-        </label>
-        <label class="rcard" onclick="rcard(this,'disp')">
-          <div class="rcard-dot"></div>
-          <input type="radio" name="disponibilidade" value="4-8h/semana">
-          <div><div class="rcard-title">4 a 8h por semana</div><div class="rcard-sub">Envolvimento ativo em projeto ou função definida</div></div>
-        </label>
-        <label class="rcard" onclick="rcard(this,'disp')">
-          <div class="rcard-dot"></div>
-          <input type="radio" name="disponibilidade" value="+8h/semana">
-          <div><div class="rcard-title">Mais de 8h por semana</div><div class="rcard-sub">Dedicação plena a uma das funções de liderança</div></div>
-        </label>
-      </div>
-    </div>
-
-    <div class="btn-row">
-      <button class="btn-s" onclick="go(6)">← Voltar</button>
-      <button class="btn-p" onclick="go(8)">Continuar →</button>
-    </div>
-  </div>
 </div>
 
-<!-- ══════════ SLIDE 8 — ENCERRAMENTO ══════════ -->
-<div class="slide" id="s8">
-  <div class="slide-inner">
-    <p class="eyebrow">08 — PARA FINALIZARMOS</p>
-    <h2 class="page-title">Últimas perguntas.</h2>
-    <p class="page-sub">Para finalizarmos sua candidatura.</p>
+<!-- ════════════════════════ P4 — TRILHA ════════════════════════ -->
+<div class="pg pg-form" id="p4">
+<div class="pg-inner">
+  <p class="ey">04 — SUA TRILHA</p>
+  <h2 class="ptitle">Como você quer contribuir.</h2>
+  <p class="psub">Todas as 15 são Founder Members. A trilha define como você contribui — e os benefícios adicionais que você acessa.</p>
 
-    <div class="field">
-      <label class="field-label" for="expect">O que você espera da NAYA nos próximos 12 meses?</label>
-      <textarea id="expect" name="expectativas_12m" maxlength="400" oninput="cc(this,'cc4')"></textarea>
-      <div class="char-count"><span id="cc4">0</span> / 400</div>
-    </div>
-
-    <div class="field">
-      <label class="field-label">Você já conhece alguma co-fundadora da NAYA?</label>
-      <div class="rcard-wrap">
-        <label class="rcard" onclick="rcard(this,'conhece'); document.getElementById('conhece-field').style.display='block'">
-          <div class="rcard-dot"></div>
-          <input type="radio" name="conhece_membra" value="Sim">
-          <div><div class="rcard-title">Sim</div></div>
-        </label>
-        <label class="rcard" onclick="rcard(this,'conhece'); document.getElementById('conhece-field').style.display='none'">
-          <div class="rcard-dot"></div>
-          <input type="radio" name="conhece_membra" value="Não">
-          <div><div class="rcard-title">Não ainda</div></div>
-        </label>
+  <div class="trilhas">
+    <div class="tc" onclick="trilha(this,'founder')">
+      <input type="radio" name="trilha" value="Founder Member">
+      <div class="tc-tag">TRILHA BASE</div>
+      <div class="tc-title">Founder Member</div>
+      <div class="tc-sub">Conselheira · Quem cresce junto</div>
+      <div class="tc-expand" id="ex-founder">
+        <p class="tc-q">"Eu acredito na visão da NAYA e quero fazer parte da sua construção desde o início."</p>
+        <p class="tc-d">Você contribui com perspectiva, experiência e presença. Participa dos encontros estratégicos e representa a NAYA nos espaços onde já está.<br><br><strong>Meta trimestral:</strong> participar de ao menos 2 dos 3 encontros estratégicos do Circle.<br><br><strong>Benefícios:</strong> todos os benefícios base da cohort · Banco de Talentos no NAYA Indica.</p>
       </div>
     </div>
-    <div class="field" id="conhece-field" style="display:none">
-      <label class="field-label" for="quem">Quem você conhece?</label>
-      <input type="text" id="quem" name="quem_conhece" placeholder="Nome da membra">
+    <div class="tc" onclick="trilha(this,'builder')">
+      <input type="radio" name="trilha" value="Builder">
+      <div class="tc-tag">+ BENEFÍCIOS EXCLUSIVOS</div>
+      <div class="tc-title">Builder</div>
+      <div class="tc-sub">Lidere · Quem assume uma frente</div>
+      <div class="tc-expand" id="ex-builder">
+        <p class="tc-q">"Eu construo. Assumo responsabilidades concretas na operação, experiência das membras ou desenvolvimento dos produtos."</p>
+        <p class="tc-d">Você assume uma frente estratégica da NAYA — produto, marketing, operação ou comunidade — e tem disponibilidade real para entregar.<br><br><strong>Meta trimestral:</strong> 1 entrega concreta na sua frente por trimestre, documentada e registrada.<br><br><strong>Benefícios extras:</strong> sessões de carreira com especialistas · ativação prioritária no NAYA Intro · prioridade no Book of Experts e Speakers & Ativações.</p>
+      </div>
     </div>
+    <div class="tc" onclick="trilha(this,'champion')">
+      <input type="radio" name="trilha" value="Champion">
+      <div class="tc-tag">+ BENEFÍCIOS EXCLUSIVOS</div>
+      <div class="tc-title">Champion</div>
+      <div class="tc-sub">Conexões estratégicas · Quem abre portas</div>
+      <div class="tc-expand" id="ex-champion">
+        <p class="tc-q">"Eu conecto. Abro portas, gero oportunidades, represento a NAYA e expando o ecossistema através da minha rede."</p>
+        <p class="tc-d">Você representa a NAYA em espaços de poder, gera parcerias e conecta a marca com lideranças e oportunidades institucionais.<br><br><strong>Meta trimestral:</strong> 3 indicações qualificadas ou 1 parceria / visibilidade institucional.<br><br><strong>Benefícios extras:</strong> sessões de carreira com especialistas · ativação prioritária no NAYA Intro · prioridade no Book of Experts e Speakers & Ativações.</p>
+      </div>
+    </div>
+  </div>
 
-    <div class="field">
-      <label class="field-label" for="mais">Tem mais alguma coisa que quer compartilhar?</label>
-      <textarea id="mais" name="observacoes_livres" maxlength="400" placeholder="Fique à vontade..." oninput="cc(this,'cc5')"></textarea>
-      <div class="char-count"><span id="cc5">0</span> / 400</div>
-    </div>
-
-    <div class="terms-box">
-      <input type="checkbox" id="aceite" name="aceite" required>
-      <p class="terms-text">Confirmo que as informações prestadas são verdadeiras e que entendo que a NAYA é um ecossistema de construção coletiva — minha candidatura será avaliada antes da confirmação da vaga. <strong>Esta participação não implica em sociedade formal na NAYA.</strong> A participação societária eventualmente oferecida ocorre de forma separada, mediante instrumento próprio, a ser comunicado e formalizado em momento oportuno pela Carol e time.</p>
-    </div>
-
-    <div class="btn-row">
-      <button class="btn-s" onclick="go(7)">← Voltar</button>
-      <button class="btn-p" id="sbtn" onclick="submit()">Enviar candidatura →</button>
-    </div>
-    <div class="status-err" id="serr"></div>
+  <div class="btn-row">
+    <button class="btn-s" onclick="go(3)">← Voltar</button>
+    <button class="btn-p" onclick="go(5)">Continuar →</button>
   </div>
 </div>
+</div>
 
-<!-- ══════════ BYE ══════════ -->
-<div class="slide" id="s-bye" style="background:var(--vinho);justify-content:center;align-items:center;">
+<!-- ════════════════════════ P5 — EXPERTISE ════════════════════════ -->
+<div class="pg pg-form" id="p5">
+<div class="pg-inner">
+  <p class="ey">05 — EXPERTISE E MONETIZAÇÃO</p>
+  <h2 class="ptitle">Seu posicionamento profissional.</h2>
+  <p class="psub">Essas informações nos ajudam a posicioná-la no NAYA Intro Marketplace e no Book of Experts & Speakers.</p>
+
+  <div class="f">
+    <label class="fl">Qual é o seu tema principal de expertise? *</label>
+    <p class="fh">Em uma frase: o que você domina e pelo que você é chamada.</p>
+    <input type="text" name="expertise_tema" placeholder="Ex: liderança feminina em tech · finanças para empreendedoras · saúde mental corporativa" required>
+  </div>
+  <div class="f">
+    <label class="fl">Como você já monetiza ou deseja monetizar seu conhecimento?</label>
+    <p class="fh">Selecione todos que se aplicam.</p>
+    <div class="chips">
+      <span class="chip" onclick="chip(this,'monetiza')">Consultoria</span>
+      <span class="chip" onclick="chip(this,'monetiza')">Mentoria</span>
+      <span class="chip" onclick="chip(this,'monetiza')">Palestras</span>
+      <span class="chip" onclick="chip(this,'monetiza')">Workshops</span>
+      <span class="chip" onclick="chip(this,'monetiza')">Cursos / conteúdo digital</span>
+      <span class="chip" onclick="chip(this,'monetiza')">Advisory / board</span>
+      <span class="chip" onclick="chip(this,'monetiza')">Ainda não monetizo — quero começar</span>
+    </div>
+    <input type="hidden" id="h-monetiza" name="formas_monetizacao">
+  </div>
+  <div class="f">
+    <label class="fl">Qual o seu valor de referência por hora de consultoria ou mentoria?</label>
+    <select name="valor_hora_referencia">
+      <option value="">Selecione...</option>
+      <option>Ainda estou definindo</option><option>Até R$ 200/h</option>
+      <option>R$ 200 a R$ 500/h</option><option>R$ 500 a R$ 1.000/h</option>
+      <option>Acima de R$ 1.000/h</option><option>Trabalho com projetos fechados</option>
+    </select>
+  </div>
+  <div class="f">
+    <label class="fl">Você estaria disponível para ser listada no NAYA Intro Marketplace?</label>
+    <p class="fh">O NAYA Intro posiciona profissionais curadas para gerar negócios diretos — consultorias, mentorias, projetos, palestras. Fase piloto em 2027, restrita ao Circle.</p>
+    <select name="disponivel_naya_intro">
+      <option value="">Selecione...</option>
+      <option>Sim, estou pronta</option>
+      <option>Sim, mas ainda preciso estruturar meu posicionamento</option>
+      <option>Não por enquanto</option>
+    </select>
+  </div>
+  <div class="f">
+    <label class="fl">Você atua em outros idiomas além do português?</label>
+    <div class="chips">
+      <span class="chip" onclick="chip(this,'idioma')">Inglês</span>
+      <span class="chip" onclick="chip(this,'idioma')">Espanhol</span>
+      <span class="chip" onclick="chip(this,'idioma')">Francês</span>
+      <span class="chip" onclick="chip(this,'idioma')">Apenas português por enquanto</span>
+    </div>
+    <input type="hidden" id="h-idioma" name="idiomas">
+  </div>
+
+  <div class="btn-row">
+    <button class="btn-s" onclick="go(4)">← Voltar</button>
+    <button class="btn-p" onclick="go(6)">Continuar →</button>
+  </div>
+</div>
+</div>
+
+<!-- ════════════════════════ P6 — REDE E EXPANSÃO ════════════════════════ -->
+<div class="pg pg-form" id="p6">
+<div class="pg-inner">
+  <p class="ey">06 — REDE E EXPANSÃO</p>
+  <h2 class="ptitle">Seu alcance e potencial de impacto.</h2>
+  <p class="psub">A NAYA cresce sem custo central — através das Champions regionais e das parcerias B2B que cada co-fundadora traz.</p>
+
+  <div class="f">
+    <label class="fl">Você tem acesso ou relacionamento com empresas que possam se tornar parceiras ou patrocinadoras da NAYA?</label>
+    <p class="fh">A NAYA busca parceiros B2B em D&I, RH e ESG.</p>
+    <select name="acesso_corporativo">
+      <option value="">Selecione...</option>
+      <option>Sim, tenho contato com decisores</option>
+      <option>Sim, tenho acesso mas ainda não explorei</option>
+      <option>Tenho acesso indireto (colegas, ex-colegas)</option>
+      <option>Ainda não</option>
+    </select>
+  </div>
+  <div class="f">
+    <label class="fl">Se sim, qual empresa? (opcional)</label>
+    <input type="text" name="empresa_parceira" placeholder="Nome da empresa e tipo de contato que você tem">
+  </div>
+  <div class="f">
+    <label class="fl">Você teria interesse em ser Champion de Hub no seu ecossistema local?</label>
+    <p class="fh">Champions representam a NAYA em eventos, ativam rede e captam leads no seu hub regional — Rio, Recife, Lisboa, Atlanta, Chicago, NY.</p>
+    <select name="interesse_hub">
+      <option value="">Selecione...</option>
+      <option>Sim, adoraria representar a NAYA aqui</option>
+      <option>Talvez, mas quero entender melhor</option>
+      <option>Não por enquanto</option>
+    </select>
+  </div>
+  <div class="f">
+    <label class="fl">Em quais espaços você já tem presença ou visibilidade?</label>
+    <div class="chips">
+      <span class="chip" onclick="chip(this,'presenca')">Eventos de liderança</span>
+      <span class="chip" onclick="chip(this,'presenca')">Conferências de negócios</span>
+      <span class="chip" onclick="chip(this,'presenca')">Comunidades online</span>
+      <span class="chip" onclick="chip(this,'presenca')">Programas de aceleração</span>
+      <span class="chip" onclick="chip(this,'presenca')">Podcasts / mídia</span>
+      <span class="chip" onclick="chip(this,'presenca')">Iniciativas DEI corporativo</span>
+      <span class="chip" onclick="chip(this,'presenca')">Universidades / academia</span>
+      <span class="chip" onclick="chip(this,'presenca')">Governo / setor público</span>
+      <span class="chip" onclick="chip(this,'presenca')">Internacional / diáspora</span>
+    </div>
+    <input type="hidden" id="h-presenca" name="espacos_visibilidade">
+  </div>
+  <div class="f">
+    <label class="fl">Você tem conexões relevantes fora do Brasil?</label>
+    <p class="fh">A imersão em Salvador 2027 conecta mulheres negras dos EUA — empresárias, investidoras, líderes da diáspora.</p>
+    <select name="conexoes_internacionais">
+      <option value="">Selecione...</option>
+      <option>Sim, tenho conexões ativas no exterior</option>
+      <option>Sim, mas conexões mais informais</option>
+      <option>Ainda não, mas tenho interesse</option>
+      <option>Não</option>
+    </select>
+  </div>
+
+  <div class="btn-row">
+    <button class="btn-s" onclick="go(5)">← Voltar</button>
+    <button class="btn-p" onclick="go(7)">Continuar →</button>
+  </div>
+</div>
+</div>
+
+<!-- ════════════════════════ P7 — INVESTIMENTO ════════════════════════ -->
+<div class="pg pg-form" id="p7">
+<div class="pg-inner">
+  <p class="ey">07 — COMPROMISSO E INVESTIMENTO</p>
+  <h2 class="ptitle">Sua entrada no ecossistema.</h2>
+  <p class="psub">Todas as trilhas têm o mesmo investimento de entrada. O que muda é o nível de contribuição e os benefícios.</p>
+
+  <div class="ibox">
+    <p class="itag">Investimento de entrada na NAYA</p>
+    <div class="ival">R$ 2.500</div>
+    <p class="idesc">Este é o valor-base de entrada para co-fundadoras do Circle. O valor está diretamente alinhado ao que cada membra pode contribuir para as operações da NAYA — quanto mais estrutural a sua contribuição, mais esse investimento pode ser conversado com a Carol. O que entra em troca: acesso ao Circle curado, Rede de Indicação Ativa, visibilidade no NayaCast, Fala Potência e photoshoots, e acesso ao Intro Marketplace em 2027. Exatamente 15 vagas nesta cohort.</p>
+    <p class="iq">Você tem condições de fazer esse investimento?</p>
+    <div class="ipills">
+      <span class="ip" onclick="ipill(this)">Sim, consigo os R$ 2.500</span>
+      <span class="ip" onclick="ipill(this)">Sim, mas preciso parcelar</span>
+      <span class="ip" onclick="ipill(this)">Quero conversar sobre redução por contribuição</span>
+      <span class="ip" onclick="ipill(this)">Preciso de mais informações</span>
+    </div>
+    <input type="hidden" id="h-invest" name="situacao_investimento">
+  </div>
+
+  <div class="f">
+    <label class="fl">Disponibilidade de tempo</label>
+    <div class="rcards">
+      <label class="rc" onclick="rcard(this,'disp')">
+        <div class="rcdot"></div><input type="radio" name="disponibilidade" value="Até 4h/semana">
+        <div><div class="rc-t">Até 4h por semana</div><div class="rc-s">Participação estratégica e presença nos encontros</div></div>
+      </label>
+      <label class="rc" onclick="rcard(this,'disp')">
+        <div class="rcdot"></div><input type="radio" name="disponibilidade" value="4-8h/semana">
+        <div><div class="rc-t">4 a 8h por semana</div><div class="rc-s">Envolvimento ativo em projeto ou função definida</div></div>
+      </label>
+      <label class="rc" onclick="rcard(this,'disp')">
+        <div class="rcdot"></div><input type="radio" name="disponibilidade" value="+8h/semana">
+        <div><div class="rc-t">Mais de 8h por semana</div><div class="rc-s">Dedicação plena a uma das funções de liderança</div></div>
+      </label>
+    </div>
+  </div>
+
+  <div class="btn-row">
+    <button class="btn-s" onclick="go(6)">← Voltar</button>
+    <button class="btn-p" onclick="go(8)">Continuar →</button>
+  </div>
+</div>
+</div>
+
+<!-- ════════════════════════ P8 — ENCERRAMENTO ════════════════════════ -->
+<div class="pg pg-form" id="p8">
+<div class="pg-inner">
+  <p class="ey">08 — PARA FINALIZARMOS</p>
+  <h2 class="ptitle">Últimas perguntas.</h2>
+  <p class="psub">Para finalizarmos sua candidatura.</p>
+
+  <div class="f">
+    <label class="fl">O que você espera da NAYA nos próximos 12 meses?</label>
+    <textarea name="expectativas_12m" maxlength="400" oninput="cc(this,'c-ex')"></textarea>
+    <div class="cc"><span id="c-ex">0</span> / 400</div>
+  </div>
+  <div class="f">
+    <label class="fl">Você já conhece alguma co-fundadora da NAYA?</label>
+    <div class="rcards">
+      <label class="rc" onclick="rcard(this,'conhece'); document.getElementById('conhece-f').style.display='block'">
+        <div class="rcdot"></div><input type="radio" name="conhece_membra" value="Sim">
+        <div><div class="rc-t">Sim</div></div>
+      </label>
+      <label class="rc" onclick="rcard(this,'conhece'); document.getElementById('conhece-f').style.display='none'">
+        <div class="rcdot"></div><input type="radio" name="conhece_membra" value="Não">
+        <div><div class="rc-t">Não ainda</div></div>
+      </label>
+    </div>
+  </div>
+  <div class="f" id="conhece-f" style="display:none">
+    <label class="fl">Quem você conhece?</label>
+    <input type="text" name="quem_conhece" placeholder="Nome da membra">
+  </div>
+  <div class="f">
+    <label class="fl">Tem mais alguma coisa que quer compartilhar?</label>
+    <textarea name="observacoes_livres" maxlength="400" placeholder="Fique à vontade..." oninput="cc(this,'c-obs')"></textarea>
+    <div class="cc"><span id="c-obs">0</span> / 400</div>
+  </div>
+
+  <div class="terms">
+    <input type="checkbox" id="aceite" required>
+    <p class="terms-t">Confirmo que as informações prestadas são verdadeiras e que entendo que a NAYA é um ecossistema de construção coletiva — minha candidatura será avaliada antes da confirmação da vaga. <strong>Esta participação não implica em sociedade formal na NAYA.</strong> A participação societária eventualmente oferecida ocorre de forma separada, mediante instrumento próprio, a ser comunicado e formalizado em momento oportuno pela Carol e time.</p>
+  </div>
+
+  <div class="btn-row">
+    <button class="btn-s" onclick="go(7)">← Voltar</button>
+    <button class="btn-p" id="sbtn" onclick="enviar()">Enviar candidatura →</button>
+  </div>
+  <div class="err" id="serr"></div>
+</div>
+</div>
+
+<!-- ════════════════════════ BYE ════════════════════════ -->
+<div class="pg pg-end pg-end-bye" id="p-bye">
   <div class="end-inner">
     <div class="end-logo">NAYA</div>
     <h2 class="end-h">Até a próxima.</h2>
-    <p class="end-p">Que bom que você chegou até aqui.<br>Nos vemos depois quando estiver pronta.<br><br>Obrigada pelo seu tempo.</p>
+    <p class="end-p">Seu lugar pode estar aqui em outro momento.<br>Quando sentir que é a hora, este espaço pode ser seu.<br><br>Obrigada por ter chegado até aqui.</p>
   </div>
 </div>
 
-<!-- ══════════ THANKS (overlay, fora do slider) ══════════ -->
-<div id="s-thanks" style="display:none;position:fixed;inset:0;background:var(--verde);z-index:200;justify-content:center;align-items:center;">
+<!-- ════════════════════════ THANKS ════════════════════════ -->
+<div class="pg pg-end pg-end-thanks" id="p-thanks">
   <div class="end-inner">
     <div class="end-logo" style="color:var(--creme)">NAYA</div>
     <h2 class="end-h">Candidatura recebida.</h2>
@@ -941,168 +765,133 @@
   </div>
 </div>
 
-</div><!-- /track -->
-</div><!-- /slider-outer -->
+</div><!-- /pages-wrap -->
 
 <script>
-// ── SLIDE ORDER ──
-const ORDER = [0,1,2,3,4,5,6,7,8,'bye'];
-const THANKS_IDX = ORDER.length; // thanks is rendered separately, not in ORDER
-let cur = 0;
+// ── STATE ──
+const PAGES = ['p0','p1','p2','p3','p4','p5','p6','p7','p8','p-bye','p-thanks'];
+let cur = 'p0';
 
-function go(id) {
-  // 'thanks' is not in the slider — show it as overlay
-  if (id === 'thanks') {
-    document.getElementById('pbar').style.display   = 'none';
-    document.getElementById('plabel').style.display = 'none';
-    document.querySelector('.slider-outer').style.display = 'none';
-    document.getElementById('s-thanks').style.display = 'flex';
-    return;
-  }
+// ── NAVIGATION ──
+function go(n) {
+  const next = (typeof n === 'number') ? 'p'+n : 'p-'+n;
 
-  const idx = ORDER.indexOf(id);
-  if (idx < 0) return;
+  // exit current
+  const curEl = document.getElementById(cur);
+  curEl.classList.remove('active');
+  curEl.classList.add('exit-up');
+  setTimeout(() => curEl.classList.remove('exit-up'), 500);
 
-  const hideUI = (id === 0 || id === 'bye');
-  document.getElementById('pbar').style.display   = hideUI ? 'none' : 'block';
-  document.getElementById('plabel').style.display = hideUI ? 'none' : 'block';
-
-  if (!hideUI && typeof id === 'number') {
-    const pct = Math.round((id / 8) * 100);
-    document.getElementById('pfill').style.width = pct + '%';
-    document.getElementById('plabel').textContent = id + ' de 8';
-  }
-
-  document.getElementById('track').style.transform = `translateX(-${idx * 100}vw)`;
-  cur = id;
-
+  // enter next (small delay for exit animation)
   setTimeout(() => {
-    const el = document.getElementById('s' + (id === 'bye' ? '-bye' : id));
-    if (el) el.scrollTop = 0;
-  }, 100);
+    const nextEl = document.getElementById(next);
+    nextEl.classList.add('active');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+    cur = next;
+    updateProgress(n);
+  }, 80);
+}
+
+function updateProgress(n) {
+  const isForm = typeof n === 'number' && n >= 1 && n <= 8;
+  document.getElementById('pbar').style.display  = isForm ? 'block' : 'none';
+  document.getElementById('plbl').style.display  = isForm ? 'block' : 'none';
+  if (isForm) {
+    document.getElementById('pfill').style.width = Math.round(n/8*100) + '%';
+    document.getElementById('plbl').textContent  = n + ' de 8';
+  }
 }
 
 // ── CHIPS ──
-const chipMap = {};
-function chip(el, group) {
+const cmap = {};
+function chip(el, g) {
   el.classList.toggle('on');
-  if (!chipMap[group]) chipMap[group] = [];
+  if (!cmap[g]) cmap[g] = [];
   const v = el.textContent.trim();
-  if (el.classList.contains('on')) { if (!chipMap[group].includes(v)) chipMap[group].push(v); }
-  else chipMap[group] = chipMap[group].filter(x => x !== v);
-  const h = document.getElementById(group + '-h');
-  if (h) h.value = chipMap[group].join(', ');
+  cmap[g] = el.classList.contains('on')
+    ? [...new Set([...cmap[g], v])]
+    : cmap[g].filter(x => x !== v);
+  const h = document.getElementById('h-'+g);
+  if (h) h.value = cmap[g].join(', ');
 }
 
 // ── RADIO CARDS ──
-function rcard(el, group) {
-  document.querySelectorAll(`input[name="${el.querySelector('input').name}"]`).forEach(r => {
-    r.closest('.rcard').classList.remove('on');
-  });
+function rcard(el, g) {
+  const name = el.querySelector('input').name;
+  document.querySelectorAll(`input[name="${name}"]`).forEach(r => r.closest('.rc').classList.remove('on'));
   el.classList.add('on');
   el.querySelector('input').checked = true;
 }
 
 // ── INTENT (p1) ──
 function intent(el, choice) {
-  document.querySelectorAll('input[name="intencao"]').forEach(r => r.closest('.rcard').classList.remove('on'));
-  el.classList.add('on');
-  el.querySelector('input').checked = true;
-
-  document.getElementById('follow-conversar').classList.remove('open');
+  rcard(el, 'intencao');
+  document.getElementById('follow-conv').classList.remove('open');
   document.getElementById('bye-row').style.display = 'none';
-  document.getElementById('btnrow1').style.display = 'flex';
-
+  document.getElementById('btnrow-1').style.display = 'flex';
   if (choice === 'conversar') {
-    document.getElementById('follow-conversar').classList.add('open');
+    document.getElementById('follow-conv').classList.add('open');
   } else if (choice === 'nao') {
-    document.getElementById('btnrow1').style.display = 'none';
+    document.getElementById('btnrow-1').style.display = 'none';
     document.getElementById('bye-row').style.display = 'block';
   }
 }
 
 // ── TRILHA ──
 function trilha(el, id) {
-  document.querySelectorAll('.trilha-card').forEach(c => {
-    c.classList.remove('on');
-    c.querySelector('.trilha-expand').classList.remove('open');
-  });
+  document.querySelectorAll('.tc').forEach(c => { c.classList.remove('on'); c.querySelector('.tc-expand').classList.remove('open'); });
   el.classList.add('on');
   el.querySelector('input').checked = true;
-  document.getElementById('ex-' + id).classList.add('open');
+  document.getElementById('ex-'+id).classList.add('open');
 }
 
 // ── REDE ──
-const redeMap = { pessoas: false, corp: false, eventos: false, redes: false };
+const redeState = {};
 function rede(card, key) {
-  redeMap[key] = !redeMap[key];
-  card.classList.toggle('on', redeMap[key]);
-  document.getElementById('ri-' + key).classList.toggle('open', redeMap[key]);
-}
-
-// ── INVEST PILLS ──
-function ipill(el) {
-  document.querySelectorAll('.ipill').forEach(p => p.classList.remove('on'));
-  el.classList.add('on');
-  document.getElementById('invest-h').value = el.textContent.trim();
+  redeState[key] = !redeState[key];
+  card.classList.toggle('on', redeState[key]);
+  document.getElementById('rs-'+key).classList.toggle('open', redeState[key]);
 }
 
 // ── CONDITIONAL 3.2 ──
 function showIndicada(sel) {
-  const show = sel.value === 'Indicação de uma membra do Circle';
-  document.getElementById('cond-indicada').classList.toggle('open', show);
+  document.getElementById('cond-ind').classList.toggle('open', sel.value === 'Indicação de uma membra do Circle');
+}
+
+// ── INVEST PILLS ──
+function ipill(el) {
+  document.querySelectorAll('.ip').forEach(p => p.classList.remove('on'));
+  el.classList.add('on');
+  document.getElementById('h-invest').value = el.textContent.trim();
 }
 
 // ── CHAR COUNT ──
 function cc(el, id) { document.getElementById(id).textContent = el.value.length; }
 
 // ── SUBMIT ──
-async function submit() {
-  if (!document.getElementById('aceite').checked) {
-    alert('Por favor, confirme os termos antes de enviar.');
-    return;
-  }
+async function enviar() {
+  if (!document.getElementById('aceite').checked) { alert('Por favor, confirme os termos antes de enviar.'); return; }
   const btn = document.getElementById('sbtn');
   const err = document.getElementById('serr');
   btn.disabled = true; btn.textContent = 'Enviando...';
 
   const data = new FormData();
-  const names = [
-    'nome_completo','email','whatsapp','linkedin_url','cargo_atual','empresa_atual',
-    'cidade_hub','perfil_profissional','setor_atuacao','intencao','duvidas_decisao',
-    'anos_lideranca','historico_construcao','por_que_agora',
-    'origem_candidatura','indicada_por','motivacao','motivacoes_cofounder',
-    'rede_pessoas_1','rede_pessoas_2','rede_pessoas_3',
-    'rede_corp_1','rede_corp_2','rede_corp_3',
-    'rede_evento_1','rede_evento_2','rede_evento_3',
-    'rede_comunidade_1','rede_comunidade_2','rede_comunidade_3',
-    'trilha','expertise_tema','formas_monetizacao','valor_hora_referencia',
-    'disponivel_naya_intro','idiomas','acesso_corporativo','empresa_parceira',
-    'interesse_hub','espacos_visibilidade','conexoes_internacionais',
-    'situacao_investimento','disponibilidade','expectativas_12m',
-    'conhece_membra','quem_conhece','observacoes_livres'
-  ];
-  names.forEach(n => {
-    const el = document.querySelector(`[name="${n}"]`);
-    if (el) data.append(n, el.value || '');
+  document.querySelectorAll('input[name], select[name], textarea[name]').forEach(el => {
+    if (el.type === 'radio' && !el.checked) return;
+    if (el.type === 'checkbox') return;
+    data.append(el.name, el.value || '');
   });
 
   try {
-    const res = await fetch('https://formspree.io/f/xaqzzvjb', {
-      method: 'POST', body: data, headers: { Accept: 'application/json' }
-    });
+    const res = await fetch('https://formspree.io/f/xaqzzvjb', { method:'POST', body:data, headers:{Accept:'application/json'} });
     if (res.ok) { go('thanks'); }
     else throw new Error();
   } catch {
     err.style.display = 'block';
     err.textContent = 'Houve um erro ao enviar. Tente novamente ou entre em contato com a Carol.';
-    btn.disabled = false;
-    btn.textContent = 'Enviar candidatura →';
+    btn.disabled = false; btn.textContent = 'Enviar candidatura →';
   }
 }
-
-// init
-go(0);
 </script>
 </body>
 </html>
