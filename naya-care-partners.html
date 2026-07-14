@@ -199,9 +199,9 @@
   <div class="land-sub-logo">PILAR CARE</div>
   <p class="land-ey">Founding Partners · Saúde e Bem-Estar</p>
   <h1 class="land-h">O cuidado também faz parte do ecossistema.</h1>
-  <p class="land-sub">Este formulário é o primeiro passo para você se tornar uma Founding Partner do Pilar Care da NAYA. A rede de profissionais de saúde e bem-estar que cuida das Founder Members e Membras Circle.<br><br>Queremos te conhecer além do currículo: sua trajetória, sua forma de cuidar e como você imagina contribuir com esse ecossistema.</p>
+  <p class="land-sub">Este formulário é o primeiro passo para você se tornar uma Founding Partner do Pilar Care da NAYA. A rede de profissionais de saúde e bem-estar que cuida das membras do nosso ecossistema.<br><br>Queremos te conhecer além do currículo: sua trajetória, sua forma de cuidar e como você imagina contribuir com esse ecossistema.</p>
   <button class="land-cta" onclick="go(1)">QUERO FAZER PARTE →</button>
-  <p class="land-fn">As candidaturas são avaliadas individualmente.<br>A confirmação da parceria acontece após uma conversa com a Carol e time.</p>
+  <p class="land-fn">As candidaturas são avaliadas individualmente. A confirmação da parceria acontece após uma conversa com o time — com exceção das profissionais que receberam convite direto para aplicação, que serão convidadas diretamente para a sessão de onboarding.</p>
 </div>
 
 <!-- ════════ P1 — SOBRE VOCÊ ════════ -->
@@ -242,7 +242,7 @@
     <div class="chips" style="margin-bottom:10px">
       <span class="chip" onclick="chip(this,'perfis')">Psicóloga</span>
       <span class="chip" onclick="chip(this,'perfis')">Psicanalista</span>
-      <span class="chip" onclick="chip(this,'perfis');showMedica(this)">Médica</span>
+      <span class="chip" onclick="chip(this,'perfis'); setTimeout(()=>showMedica(this),0)">Médica</span>
       <span class="chip" onclick="chip(this,'perfis')">Nutricionista</span>
       <span class="chip" onclick="chip(this,'perfis')">Fisioterapeuta</span>
       <span class="chip" onclick="chip(this,'perfis')">Sexóloga / Psicossexóloga</span>
@@ -404,7 +404,7 @@
 
   <div class="f">
     <label class="fl">O que você já construiu ou consolidou em sua trajetória? *</label>
-    <p class="fh">Pode ser uma metodologia, um programa, um consultório de referência, uma comunidade de pacientes ou clientes. Algo concreto que você criou ou liderou.</p>
+    <p class="fh">Pode ser uma metodologia, um programa, um consultório de referência, uma comunidade de pacientes ou clientes — algo concreto que você criou ou liderou.</p>
     <textarea name="historico_construcao" maxlength="600" placeholder="Ex: Criei um programa de saúde mental para mulheres negras atendendo X pessoas. Desenvolvi metodologia própria para..." oninput="cc(this,'c-hc')" required></textarea>
     <div class="cc"><span id="c-hc">0</span> / 600</div>
   </div>
@@ -501,7 +501,7 @@
 <div class="pg-inner">
   <p class="ey">04 — SUA TRILHA DE CONTRIBUIÇÃO</p>
   <h2 class="ptitle">Como você quer cuidar.</h2>
-  <p class="psub">Todas as Health Partners integram o Pilar Care. A trilha define o nível da sua contribuição e molda os benefícios que você acessa.</p>
+  <p class="psub">Todas as Health Partners integram o Pilar Care. A trilha define o nível da sua contribuição — e molda os benefícios que você acessa.</p>
 
   <div class="trilhas">
     <div class="tc" onclick="trilha(this,'n1')">
@@ -768,24 +768,6 @@
   <h2 class="ptitle">Últimas perguntas.</h2>
   <p class="psub">Quase lá.</p>
 
-  <div class="f">
-    <label class="fl">Além de ser Health Partner, você tem interesse em se tornar Membra do Naya Circle?</label>
-    <p class="fh">Como Membra Circle você acessa os mesmos espaços de conexão, visibilidade e rede que as Founder Members.</p>
-    <div class="rcards">
-      <label class="rc" onclick="rcard(this,'circle')">
-        <div class="rcdot"></div><input type="radio" name="interesse_circle" value="Sim, já quero seguir com a candidatura">
-        <div><div class="rc-t">Sim, já quero seguir com a candidatura</div></div>
-      </label>
-      <label class="rc" onclick="rcard(this,'circle')">
-        <div class="rcdot"></div><input type="radio" name="interesse_circle" value="Sim, quero entender melhor antes">
-        <div><div class="rc-t">Sim, quero entender melhor antes</div></div>
-      </label>
-      <label class="rc" onclick="rcard(this,'circle')">
-        <div class="rcdot"></div><input type="radio" name="interesse_circle" value="Não por enquanto">
-        <div><div class="rc-t">Não por enquanto</div></div>
-      </label>
-    </div>
-  </div>
 
   <div class="f">
     <label class="fl">O que você espera da parceria com a NAYA nos próximos 12 meses?</label>
